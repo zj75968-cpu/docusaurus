@@ -167,7 +167,8 @@ function getLocalizedConfigValue(key: keyof typeof ConfigLocalized) {
 // This makes localized sites build much slower on Netlify
 // See also https://github.com/facebook/docusaurus/issues/11208
 // const showLastUpdate = process.env.DOCUSAURUS_CURRENT_LOCALE === defaultLocale;
-const showLastUpdate = true;
+// Vercel build archives do not include the Git worktree metadata.
+const showLastUpdate = !process.env.VERCEL_ENV;
 
 export default async function createConfigAsync() {
   return {
@@ -192,7 +193,7 @@ export default async function createConfigAsync() {
             rspackBundler: true,
             rspackPersistentCache: true,
             ssgWorkerThreads: true,
-            gitEagerVcs: true,
+            gitEagerVcs: false,
           },
       experimental_vcs: vcs,
       experimental_router: router,
