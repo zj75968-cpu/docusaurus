@@ -17,6 +17,8 @@ import MDXLi from '@theme/MDXComponents/Li';
 import MDXImg from '@theme/MDXComponents/Img';
 import Admonition from '@theme/Admonition';
 import Mermaid from '@theme/Mermaid';
+import LinkCard from '@theme/LinkCard';
+import CardGrid from '@theme/CardGrid';
 
 import type {MDXComponentsObject} from '@theme/MDXComponents';
 
@@ -38,6 +40,8 @@ const MDXComponents: MDXComponentsObject = {
   h6: (props: ComponentProps<'h6'>) => <MDXHeading as="h6" {...props} />,
   admonition: Admonition,
   mermaid: Mermaid,
+  LinkCard,
+  CardGrid,
 };
 
 export default MDXComponents;

@@ -1,0 +1,20 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+.backlinks {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.backlinks h2 {
+  font-size: 1.1rem;
+}
+
+.backlinks ul {
+  margin-bottom: 0;
+}

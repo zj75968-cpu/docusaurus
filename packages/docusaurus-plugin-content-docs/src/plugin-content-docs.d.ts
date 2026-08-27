@@ -27,6 +27,18 @@ declare module '@docusaurus/plugin-content-docs' {
   } from '@docusaurus/types';
   import type {Overwrite, Required} from 'utility-types';
 
+  export type {
+    KnowledgeGraph,
+    KnowledgeGraphNode,
+    KnowledgeGraphEdge,
+    KnowledgeGraphUnresolvedLink,
+  } from '@docusaurus/plugin-content-docs/client';
+
+  export type KnowledgeGraphOptions = {
+    /** Build and expose document relationship data to themes. */
+    enabled: boolean;
+  };
+
   export type Assets = {
     image?: string;
   };
@@ -184,6 +196,14 @@ declare module '@docusaurus/plugin-content-docs' {
     VersionsOptions &
     MDXOptions &
     SidebarOptions & {
+      /**
+       * Knowledge graph generation and global data exposure.
+       */
+      knowledgeGraph: KnowledgeGraphOptions;
+      /**
+       * Transform resolvable `[[document]]` references into Markdown links.
+       */
+      wikiLinks: boolean;
       /** Plugin ID. */
       id: string;
       /**

@@ -36,7 +36,10 @@ import {
   getLoadedContentTranslationFiles,
 } from './translations';
 import {createAllRoutes} from './routes';
+import remarkWikiLinks from './remarkWikiLinks';
 
+import {createKnowledgeGraph} from './graph';
+import {resolveDocumentLink} from './graphResolution';
 import {createContentHelpers} from './contentHelpers';
 import {loadVersion} from './versions/loadVersion';
 import type {
@@ -137,7 +140,53 @@ export default async function pluginContentDocs(
         rehypePlugins,
         recmaPlugins,
         beforeDefaultRehypePlugins,
-        beforeDefaultRemarkPlugins,
+        beforeDefaultRemarkPlugins: [
+          ...(options.wikiLinks
+            ? [
+                [
+                  remarkWikiLinks,
+                  {
+                    resolveWikiLink: ({sourceFilePath, target}: {
+                      sourceFilePath: string;
+                      target: string;
+                    }) => {
+                      const version = getVersionFromSourceFilePath(
+                        sourceFilePath,
+                        versionsMetadata,
+                      );
+                      const targetCandidates = /\.[^/]+$/.test(target)
+                        ? [target]
+                        : [`${target}.md`, `${target}.mdx`];
+                      const resolved = targetCandidates
+                        .map((targetCandidate) =>
+                          resolveMarkdownLinkPathname(targetCandidate, {
+                            sourceFilePath,
+                            sourceToPermalink:
+                              contentHelpers.sourceToPermalink,
+                            siteDir,
+                            contentPaths: version,
+                          }),
+                        )
+                        .find((permalink): permalink is string =>
+                          Boolean(permalink),
+                        );
+                      return (
+                        resolved ??
+                        resolveDocumentLink({
+                          source: aliasedSitePath(sourceFilePath, siteDir),
+                          target,
+                          documents: Array.from(
+                            contentHelpers.sourceToDoc.values(),
+                          ),
+                        })
+                      );
+                    },
+                  },
+                ],
+              ]
+            : []),
+          ...beforeDefaultRemarkPlugins,
+        ],
         staticDirs: siteConfig.staticDirectories.map((dir) =>
           path.resolve(siteDir, dir),
         ),
@@ -258,10 +307,18 @@ export default async function pluginContentDocs(
         aliasedSource,
       });
 
+      const graph = options.knowledgeGraph.enabled
+        ? await createKnowledgeGraph({
+            siteDir,
+            versions,
+          })
+        : undefined;
+
       actions.setGlobalData({
         path: normalizeUrl([baseUrl, options.routeBasePath]),
         versions: versions.map(toGlobalDataVersion),
         breadcrumbs: options.breadcrumbs,
+        ...(graph && {graph}),
       });
     },
 

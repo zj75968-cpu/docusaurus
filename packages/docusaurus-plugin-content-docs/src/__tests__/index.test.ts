@@ -219,7 +219,10 @@ describe('empty/no docs website', () => {
 });
 
 describe('simple website', () => {
-  async function loadSite({translate}: {translate?: boolean} = {}) {
+  async function loadSite({
+    translate,
+    knowledgeGraph = false,
+  }: {translate?: boolean; knowledgeGraph?: boolean} = {}) {
     const siteDir = path.join(__dirname, '__fixtures__', 'simple-site');
     const context = await loadContext({siteDir});
 
@@ -232,6 +235,7 @@ describe('simple website', () => {
       options: {
         path: 'docs',
         sidebarPath,
+        knowledgeGraph: {enabled: knowledgeGraph},
       },
     });
     const plugin = await pluginContentDocs(context, options);
@@ -363,6 +367,44 @@ describe('simple website', () => {
     utils.expectSnapshot();
 
     expect(utils.getGlobalData()).toMatchSnapshot();
+  });
+
+  it('exposes graph data when enabled', async () => {
+    const {plugin, pluginContentDir} = await loadSite({knowledgeGraph: true});
+    const content = await plugin.loadContent!();
+    const {actions, utils} = createFakeActions(pluginContentDir);
+
+    await plugin.contentLoaded!({
+      content,
+      actions,
+    });
+
+    expect(utils.getGlobalData()).toMatchObject({
+      pluginName: {
+        pluginId: {
+          graph: {
+            version: 1,
+            nodes: expect.any(Array),
+            edges: expect.any(Array),
+            backlinks: expect.any(Object),
+            unresolved: expect.any(Array),
+          },
+        },
+      },
+    });
+
+    const graph = (
+      utils.getGlobalData().pluginName!.pluginId as {
+        graph: {
+          edges: Array<{source: string; target: string; type: string}>;
+        };
+      }
+    ).graph;
+    expect(graph.edges).toContainEqual({
+      source: '/docs/',
+      target: '/docs/foo/bar',
+      type: 'markdown',
+    });
   });
 });
 

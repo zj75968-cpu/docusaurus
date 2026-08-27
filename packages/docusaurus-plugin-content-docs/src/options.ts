@@ -56,6 +56,10 @@ export const DEFAULT_OPTIONS: Omit<PluginOptions, 'id' | 'sidebarPath'> = {
   sidebarCollapsible: true,
   sidebarCollapsed: true,
   breadcrumbs: true,
+  knowledgeGraph: {
+    enabled: false,
+  },
+  wikiLinks: false,
   onInlineTags: 'warn',
   tags: undefined,
 };
@@ -72,6 +76,10 @@ const VersionOptionsSchema = Joi.object({
 const VersionsOptionsSchema = Joi.object()
   .pattern(Joi.string().required(), VersionOptionsSchema)
   .default(DEFAULT_OPTIONS.versions);
+
+const KnowledgeGraphOptionsSchema = Joi.object({
+  enabled: Joi.boolean().default(DEFAULT_OPTIONS.knowledgeGraph.enabled),
+});
 
 const OptionsSchema = Joi.object<PluginOptions>({
   path: Joi.string().default(DEFAULT_OPTIONS.path),
@@ -145,6 +153,10 @@ const OptionsSchema = Joi.object<PluginOptions>({
   lastVersion: Joi.string().optional(),
   versions: VersionsOptionsSchema,
   breadcrumbs: Joi.bool().default(DEFAULT_OPTIONS.breadcrumbs),
+  knowledgeGraph: KnowledgeGraphOptionsSchema.default(
+    DEFAULT_OPTIONS.knowledgeGraph,
+  ),
+  wikiLinks: Joi.boolean().default(DEFAULT_OPTIONS.wikiLinks),
   onInlineTags: Joi.string()
     .equal('ignore', 'log', 'warn', 'throw')
     .default(DEFAULT_OPTIONS.onInlineTags),

@@ -94,6 +94,20 @@ describe('normalizeDocsPluginOptions', () => {
     });
   });
 
+  it('accepts enabling the knowledge graph', () => {
+    expect(testValidate({knowledgeGraph: {enabled: true}})).toEqual({
+      ...defaultOptions,
+      knowledgeGraph: {enabled: true},
+    });
+  });
+
+  it('accepts enabling wikilink rendering', () => {
+    expect(testValidate({wikiLinks: true})).toEqual({
+      ...defaultOptions,
+      wikiLinks: true,
+    });
+  });
+
   it('accepts correctly defined remark and rehype plugin options', () => {
     const userOptions: Options = {
       beforeDefaultRemarkPlugins: [],

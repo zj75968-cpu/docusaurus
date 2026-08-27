@@ -19,6 +19,14 @@ import {
   getDocVersionSuggestions,
 } from './docsClientUtils';
 import type {UseDataOptions} from '@docusaurus/types';
+import type {KnowledgeGraph} from '../graphTypes';
+
+export type {
+  KnowledgeGraph,
+  KnowledgeGraphNode,
+  KnowledgeGraphEdge,
+  KnowledgeGraphUnresolvedLink,
+} from '../graphTypes';
 
 export {
   useDocById,
@@ -107,6 +115,7 @@ export type GlobalPluginData = {
   path: string;
   versions: GlobalVersion[];
   breadcrumbs: boolean;
+  graph?: KnowledgeGraph;
 };
 export type DocVersionSuggestions = {
   /** Suggest the latest version */

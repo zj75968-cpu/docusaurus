@@ -517,6 +517,8 @@ export default async function createConfigAsync() {
             },
             showLastUpdateAuthor: showLastUpdate,
             showLastUpdateTime: showLastUpdate,
+            knowledgeGraph: {enabled: true},
+            wikiLinks: true,
             remarkPlugins: [[npm2yarn, {sync: true}], remarkMath, configTabs],
             rehypePlugins: [rehypeKatex],
             disableVersioning: isVersioningDisabled,

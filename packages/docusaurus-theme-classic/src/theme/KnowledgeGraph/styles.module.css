@@ -1,0 +1,52 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+.graph {
+  margin: 2rem 0;
+  padding: 1rem;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: var(--ifm-global-radius);
+  overflow: hidden;
+}
+
+.graph h2 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.graphSvg {
+  display: block;
+  width: 100%;
+  min-height: 16rem;
+}
+
+.edge {
+  stroke: var(--ifm-color-emphasis-300);
+  stroke-width: 1.5;
+}
+
+.node,
+.currentNode {
+  fill: var(--ifm-color-primary);
+  stroke: var(--ifm-background-color);
+  stroke-width: 3;
+  transition: r 150ms ease, fill 150ms ease;
+}
+
+.currentNode {
+  fill: var(--ifm-color-success);
+}
+
+.nodeLink:hover .node,
+.nodeLink:hover .currentNode {
+  fill: var(--ifm-color-primary-dark);
+}
+
+.nodeLabel {
+  fill: var(--ifm-font-color-base);
+  font-size: 11px;
+}

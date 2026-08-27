@@ -6,21 +6,27 @@
  */
 
 import React, {type ReactNode} from 'react';
-import clsx from 'clsx';
+import classNames from 'clsx';
 import {ThemeClassNames} from '@docusaurus/theme-common';
 import {useDoc} from '@docusaurus/plugin-content-docs/client';
+import useKnowledgeGraphData from '@theme/knowledgeGraph';
 import TagsListInline from '@theme/TagsListInline';
 
 import EditMetaRow from '@theme/EditMetaRow';
+import Backlinks from '@theme/Backlinks';
+import KnowledgeGraph from '@theme/KnowledgeGraph';
 
 export default function DocItemFooter(): ReactNode {
   const {metadata} = useDoc();
   const {editUrl, lastUpdatedAt, lastUpdatedBy, tags} = metadata;
+  const {graph, currentNode} = useKnowledgeGraphData();
 
   const canDisplayTagsRow = tags.length > 0;
   const canDisplayEditMetaRow = !!(editUrl || lastUpdatedAt || lastUpdatedBy);
+  const canDisplayKnowledgeGraph = Boolean(graph && currentNode);
 
-  const canDisplayFooter = canDisplayTagsRow || canDisplayEditMetaRow;
+  const canDisplayFooter =
+    canDisplayTagsRow || canDisplayEditMetaRow || canDisplayKnowledgeGraph;
 
   if (!canDisplayFooter) {
     return null;
@@ -28,10 +34,10 @@ export default function DocItemFooter(): ReactNode {
 
   return (
     <footer
-      className={clsx(ThemeClassNames.docs.docFooter, 'docusaurus-mt-lg')}>
+      className={classNames(ThemeClassNames.docs.docFooter, 'docusaurus-mt-lg')}>
       {canDisplayTagsRow && (
         <div
-          className={clsx(
+          className={classNames(
             'row margin-top--sm',
             ThemeClassNames.docs.docFooterTagsRow,
           )}>
@@ -42,7 +48,7 @@ export default function DocItemFooter(): ReactNode {
       )}
       {canDisplayEditMetaRow && (
         <EditMetaRow
-          className={clsx(
+          className={classNames(
             'margin-top--sm',
             ThemeClassNames.docs.docFooterEditMetaRow,
           )}
@@ -50,6 +56,12 @@ export default function DocItemFooter(): ReactNode {
           lastUpdatedAt={lastUpdatedAt}
           lastUpdatedBy={lastUpdatedBy}
         />
+      )}
+      {canDisplayKnowledgeGraph && (
+        <>
+          <Backlinks />
+          <KnowledgeGraph />
+        </>
       )}
     </footer>
   );

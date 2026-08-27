@@ -1181,6 +1181,8 @@ declare module '@theme/MDXComponents' {
   import type MDXImg from '@theme/MDXComponents/Img';
   import type Admonition from '@theme/Admonition';
   import type Mermaid from '@theme/Mermaid';
+  import type LinkCard from '@theme/LinkCard';
+  import type CardGrid from '@theme/CardGrid';
   import type Head from '@docusaurus/Head';
 
   import type {MDXProvider} from '@mdx-js/react';
@@ -1205,6 +1207,8 @@ declare module '@theme/MDXComponents' {
     readonly h6: (props: ComponentProps<'h6'>) => ReactNode;
     readonly admonition: typeof Admonition;
     readonly mermaid: typeof Mermaid;
+    readonly LinkCard: typeof LinkCard;
+    readonly CardGrid: typeof CardGrid;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [tagName: string]: ComponentType<any>;
   };
@@ -2057,4 +2061,95 @@ declare module '@theme/DocBreadcrumbs/StructuredData' {
   }
 
   export default function DocBreadcrumbsStructuredData(props: Props): ReactNode;
+}
+
+declare module '@theme/KnowledgeGraph' {
+  import type {ReactNode} from 'react';
+
+  export interface Props {
+    pluginId?: string;
+    docId?: string;
+    maxNodes?: number;
+    title?: ReactNode;
+  }
+
+  export default function KnowledgeGraph(props: Props): ReactNode;
+}
+
+declare module '@theme/Backlinks' {
+  import type {ReactNode} from 'react';
+
+  export interface Props {
+    pluginId?: string;
+    docId?: string;
+    title?: ReactNode;
+  }
+
+  export default function Backlinks(props: Props): ReactNode;
+}
+
+declare module '@theme/knowledgeGraph' {
+  import type {
+    GlobalPluginData,
+    KnowledgeGraph,
+    KnowledgeGraphNode,
+  } from '@docusaurus/plugin-content-docs/client';
+
+  export type KnowledgeGraphDataState = {
+    data?: GlobalPluginData;
+    graph?: KnowledgeGraph;
+    currentNode?: KnowledgeGraphNode;
+    relatedNodes: KnowledgeGraphNode[];
+  };
+
+  export default function useKnowledgeGraphData(options?: {
+    pluginId?: string;
+    docId?: string;
+  }): KnowledgeGraphDataState;
+}
+
+declare module '@theme/knowledgeGraphUtils' {
+  import type {
+    KnowledgeGraph,
+    KnowledgeGraphNode,
+  } from '@docusaurus/plugin-content-docs/client';
+
+  const knowledgeGraphUtils: {
+    findCurrentGraphNode: (params: {
+      graph?: KnowledgeGraph;
+      docId?: string;
+      pathname: string;
+      withBaseUrl: (path: string) => string;
+    }) => KnowledgeGraphNode | undefined;
+    getRelatedGraphNodes: (params: {
+      graph?: KnowledgeGraph;
+      currentNode?: KnowledgeGraphNode;
+    }) => KnowledgeGraphNode[];
+  };
+
+  export default knowledgeGraphUtils;
+}
+
+declare module '@theme/LinkCard' {
+  import type {ReactNode} from 'react';
+
+  export interface Props {
+    href: string;
+    title: ReactNode;
+    description?: ReactNode;
+    className?: string;
+  }
+
+  export default function LinkCard(props: Props): ReactNode;
+}
+
+declare module '@theme/CardGrid' {
+  import type {ReactNode} from 'react';
+
+  export interface Props {
+    children: ReactNode;
+    className?: string;
+  }
+
+  export default function CardGrid(props: Props): ReactNode;
 }
