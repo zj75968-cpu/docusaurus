@@ -6,13 +6,11 @@
  */
 
 import type {ReactNode} from 'react';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Link from '@docusaurus/Link';
 import Translate from '@docusaurus/Translate';
 import {
   useVersions,
   useLatestVersion,
-  type GlobalVersion,
 } from '@docusaurus/plugin-content-docs/client';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
@@ -28,18 +26,7 @@ function DocumentationLabel() {
   );
 }
 
-function ReleaseNotesLabel() {
-  return (
-    <Translate id="versionsPage.versionEntry.releaseNotes">
-      Release Notes
-    </Translate>
-  );
-}
-
 export default function Version(): ReactNode {
-  const {
-    siteConfig: {organizationName, projectName},
-  } = useDocusaurusContext();
   const versions = useVersions(docsPluginId);
   const latestVersion = useLatestVersion(docsPluginId);
   const currentVersion = versions.find(
@@ -48,15 +35,6 @@ export default function Version(): ReactNode {
   const pastVersions = versions.filter(
     (version) => version !== latestVersion && version.name !== 'current',
   );
-  const repoUrl = `https://github.com/${organizationName!}/${projectName!}`;
-
-  function getReleaseNotesUrl(version: GlobalVersion): string {
-    if (version.name === '2.x') {
-      return 'https://github.com/facebook/docusaurus/blob/main/CHANGELOG-v2.md';
-    }
-    return `${repoUrl}/releases/tag/v${version.name}`;
-  }
-
   return (
     <Layout
       title="Versions"
@@ -86,11 +64,6 @@ export default function Version(): ReactNode {
                 <td>
                   <Link to={latestVersion.path}>
                     <DocumentationLabel />
-                  </Link>
-                </td>
-                <td>
-                  <Link to={getReleaseNotesUrl(latestVersion)}>
-                    <ReleaseNotesLabel />
                   </Link>
                 </td>
               </tr>
@@ -149,11 +122,6 @@ export default function Version(): ReactNode {
                         <DocumentationLabel />
                       </Link>
                     </td>
-                    <td>
-                      <Link href={getReleaseNotesUrl(version)}>
-                        <ReleaseNotesLabel />
-                      </Link>
-                    </td>
                   </tr>
                 ))}
                 {VersionsArchivedList.map(([versionName, versionUrl]) => (
@@ -162,11 +130,6 @@ export default function Version(): ReactNode {
                     <td>
                       <Link to={versionUrl}>
                         <DocumentationLabel />
-                      </Link>
-                    </td>
-                    <td>
-                      <Link href={`${repoUrl}/releases/tag/v${versionName}`}>
-                        <ReleaseNotesLabel />
                       </Link>
                     </td>
                   </tr>

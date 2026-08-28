@@ -41,26 +41,6 @@
   margin-right: 0.25rem;
 }
 
-.showcaseCardSrcBtn {
-  margin-left: 6px;
-  padding-left: 12px;
-  padding-right: 12px;
-  border: none;
-}
-
-.showcaseCardSrcBtn:focus-visible {
-  background-color: var(--ifm-color-secondary-dark);
-}
-
-[data-theme='dark'] .showcaseCardSrcBtn {
-  background-color: var(--ifm-color-emphasis-200) !important;
-  color: inherit;
-}
-
-[data-theme='dark'] .showcaseCardSrcBtn:hover {
-  background-color: var(--ifm-color-emphasis-300) !important;
-}
-
 .showcaseCardBody {
   font-size: smaller;
   line-height: 1.66;

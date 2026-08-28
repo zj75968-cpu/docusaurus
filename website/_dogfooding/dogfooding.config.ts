@@ -18,8 +18,7 @@ import type {Options as PageOptions} from '@docusaurus/plugin-content-pages';
 // See also https://github.com/facebook/docusaurus/issues/11208
 // TODO duplicated :/
 export const showLastUpdate =
-  !process.env.VERCEL_ENV &&
-  process.env.DOCUSAURUS_CURRENT_LOCALE === 'en';
+  !process.env.VERCEL_ENV && process.env.DOCUSAURUS_CURRENT_LOCALE === 'en';
 
 export function dogfoodingTransformFrontMatter(frontMatter: {
   [key: string]: unknown;
@@ -46,7 +45,6 @@ export const dogfoodingPluginInstances: PluginConfig[] = [
       id: 'docs-tests',
       routeBasePath: '/tests/docs',
       sidebarPath: '_dogfooding/docs-tests-sidebars.js',
-      editUrl: 'https://github.com/facebook/docusaurus/edit/main/website/',
       versions: {
         current: {
           noIndex: !isArgosBuild,
@@ -90,7 +88,6 @@ export const dogfoodingPluginInstances: PluginConfig[] = [
       id: 'blog-tests',
       path: '_dogfooding/_blog tests',
       routeBasePath: '/tests/blog',
-      editUrl: 'https://github.com/facebook/docusaurus/edit/main/website/',
       postsPerPage: 3,
       blogSidebarCount: 'ALL',
       feedOptions: {
@@ -125,8 +122,6 @@ export const dogfoodingPluginInstances: PluginConfig[] = [
       routeBasePath: '/tests/pages',
       showLastUpdateTime: showLastUpdate,
       showLastUpdateAuthor: showLastUpdate,
-      editUrl: ({pagesPath}) =>
-        `https://github.com/facebook/docusaurus/edit/main/website/_dogfooding/_pages tests/${pagesPath}`,
     } satisfies PageOptions,
   ],
 

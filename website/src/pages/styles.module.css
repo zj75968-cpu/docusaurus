@@ -194,14 +194,6 @@ html[data-theme='dark'] .topBannerTitleText {
   margin: 20px 36px;
 }
 
-.indexCtasGitHubButtonWrapper {
-  display: flex;
-}
-
-.indexCtasGitHubButton {
-  overflow: hidden;
-}
-
 .indexCtaTryNowButton:hover {
   color: var(--ifm-color-primary);
 }
@@ -233,10 +225,6 @@ html[data-theme='dark'] .topBannerTitleText {
 
   .indexCtas a {
     margin: 20px 36px;
-  }
-
-  .indexCtasGitHubButton {
-    display: none;
   }
 }
 

@@ -55,11 +55,6 @@ function TeamProfileCard({
         <div className="card__body">{children}</div>
         <div className="card__footer">
           <div className="button-group button-group--block">
-            {githubUrl && (
-              <Link className="button button--secondary" href={githubUrl}>
-                GitHub
-              </Link>
-            )}
             {xUrl && (
               <Link className="button button--secondary" href={xUrl}>
                 X
