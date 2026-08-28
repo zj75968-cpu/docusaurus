@@ -38,7 +38,7 @@ collections:
     folder: website/docs/knowledge-base
     create: true
     delete: true
-    extension: mdx
+    extension: md
     format: frontmatter
     path: '{{category}}/{{fields.slug}}'
     summary: '[EN] {{title}} — {{category}}/{{fields.slug}}'
@@ -95,7 +95,7 @@ collections:
       - label: Body
         name: body
         widget: markdown
-        hint: Markdown, MDX, and `[[WikiLink]]` syntax are supported by the site build.
+        hint: Markdown and `[[WikiLink]]` syntax are supported by the site build.
 
   - name: knowledge_base_zh_cn
     label: 简体中文文章
@@ -104,7 +104,7 @@ collections:
     folder: website/i18n/zh-CN/docusaurus-plugin-content-docs/current/knowledge-base
     create: true
     delete: true
-    extension: mdx
+    extension: md
     format: frontmatter
     path: '{{category}}/{{fields.slug}}'
     summary: '[简中] {{title}} — {{category}}/{{fields.slug}}'
@@ -162,4 +162,4 @@ collections:
       - label: 正文
         name: body
         widget: markdown
-        hint: 支持 Markdown、MDX 和 `[[WikiLink]]`，保存后由站点构建处理。
+        hint: 支持 Markdown 和 `[[WikiLink]]`，保存后由站点构建处理。

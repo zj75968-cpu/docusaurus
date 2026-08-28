@@ -9,4 +9,4 @@ tags:
 
 This section contains articles maintained through the knowledge base administration panel.
 
-Articles can use Markdown, MDX, and `[[WikiLink]]` syntax. New and updated articles are included in the document knowledge graph during the site build.
+Articles use Markdown and `[[WikiLink]]` syntax. New and updated articles are included in the document knowledge graph during the site build.
