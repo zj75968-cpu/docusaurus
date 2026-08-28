@@ -41,6 +41,11 @@ CrowdinTranslations_*.zip
 website/.cpu-prof
 
 website/i18n/**/*
+!website/i18n/zh-CN/
+!website/i18n/zh-CN/docusaurus-plugin-content-docs/
+!website/i18n/zh-CN/docusaurus-plugin-content-docs/current/
+!website/i18n/zh-CN/docusaurus-plugin-content-docs/current/knowledge-base/
+!website/i18n/zh-CN/docusaurus-plugin-content-docs/current/knowledge-base/**
 #!website/i18n/fr
 #!website/i18n/fr/**/*
 

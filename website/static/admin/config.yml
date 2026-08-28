@@ -1,0 +1,165 @@
+backend:
+  name: github
+  repo: zj75968-cpu/docusaurus
+  branch: main
+  base_url: https://kb.n8nmydomain.com
+  auth_endpoint: api/auth
+  auth_scope: public_repo
+  use_graphql: true
+  commit_messages:
+    create: 'content({{collection}}): create {{slug}}'
+    update: 'content({{collection}}): update {{slug}}'
+    delete: 'content({{collection}}): delete {{slug}}'
+    uploadMedia: 'content(media): upload {{path}}'
+    deleteMedia: 'content(media): delete {{path}}'
+
+site_url: https://kb.n8nmydomain.com
+display_url: https://kb.n8nmydomain.com
+logo:
+  src: /img/docusaurus.svg
+  show_in_header: true
+locale: zh_Hans
+publish_mode: simple
+media_folder: website/static/img/uploads
+public_folder: /img/uploads
+show_preview_links: false
+editor:
+  preview: false
+slug:
+  encoding: unicode
+  clean_accents: true
+  sanitize_replacement: '-'
+
+collections:
+  - name: knowledge_base_en
+    label: English articles
+    label_singular: English article
+    description: English source articles. Create the English article before adding its Chinese translation.
+    folder: website/docs/knowledge-base
+    create: true
+    delete: true
+    extension: mdx
+    format: frontmatter
+    path: '{{category}}/{{fields.slug}}'
+    summary: '[EN] {{title}} — {{category}}/{{fields.slug}}'
+    preview_path: 'docs/knowledge-base/{{category}}/{{fields.slug}}'
+    sortable_fields: [title, sidebar_position, commit_date]
+    view_groups:
+      - label: Category
+        field: category
+    fields: &article_fields_en
+      - label: Title
+        name: title
+        widget: string
+      - label: Path
+        name: slug
+        widget: string
+        hint: URL and filename segment, for example `getting-started`. Do not include `/`.
+        pattern:
+          [
+            '^[a-z0-9]+(?:[a-z0-9-]*[a-z0-9])?$',
+            'Use lowercase letters, numbers, and internal hyphens only.',
+          ]
+      - label: Category
+        name: category
+        widget: select
+        options:
+          - {label: General, value: general}
+          - {label: Guides, value: guides}
+          - {label: Reference, value: reference}
+        default: general
+      - label: Sidebar order
+        name: sidebar_position
+        widget: number
+        value_type: int
+        min: 1
+        default: 100
+      - label: Sidebar label
+        name: sidebar_label
+        widget: string
+        required: false
+      - label: Description
+        name: description
+        widget: text
+        required: false
+      - label: Tags
+        name: tags
+        widget: list
+        required: false
+        allow_add: true
+        field: {label: Tag, name: tag, widget: string}
+      - label: Cover image
+        name: image
+        widget: image
+        required: false
+      - label: Body
+        name: body
+        widget: markdown
+        hint: Markdown, MDX, and `[[WikiLink]]` syntax are supported by the site build.
+
+  - name: knowledge_base_zh_cn
+    label: 简体中文文章
+    label_singular: 简体中文文章
+    description: 中文翻译。分类和路径必须与英文原文完全相同；请先创建英文原文。
+    folder: website/i18n/zh-CN/docusaurus-plugin-content-docs/current/knowledge-base
+    create: true
+    delete: true
+    extension: mdx
+    format: frontmatter
+    path: '{{category}}/{{fields.slug}}'
+    summary: '[简中] {{title}} — {{category}}/{{fields.slug}}'
+    preview_path: 'zh-CN/docs/knowledge-base/{{category}}/{{fields.slug}}'
+    sortable_fields: [title, sidebar_position, commit_date]
+    view_groups:
+      - label: 分类
+        field: category
+    fields:
+      - label: 标题
+        name: title
+        widget: string
+      - label: 路径
+        name: slug
+        widget: string
+        hint: 必须与英文原文的路径完全相同，例如 `getting-started`，不要包含 `/`。
+        pattern:
+          [
+            '^[a-z0-9]+(?:[a-z0-9-]*[a-z0-9])?$',
+            '只能使用小写字母、数字和中间连字符。',
+          ]
+      - label: 分类
+        name: category
+        widget: select
+        hint: 必须与英文原文的分类完全相同。
+        options:
+          - {label: 常规, value: general}
+          - {label: 指南, value: guides}
+          - {label: 参考, value: reference}
+        default: general
+      - label: 侧边栏顺序
+        name: sidebar_position
+        widget: number
+        value_type: int
+        min: 1
+        default: 100
+      - label: 侧边栏标题
+        name: sidebar_label
+        widget: string
+        required: false
+      - label: 摘要
+        name: description
+        widget: text
+        required: false
+      - label: 标签
+        name: tags
+        widget: list
+        required: false
+        allow_add: true
+        field: {label: 标签, name: tag, widget: string}
+      - label: 封面图片
+        name: image
+        widget: image
+        required: false
+      - label: 正文
+        name: body
+        widget: markdown
+        hint: 支持 Markdown、MDX 和 `[[WikiLink]]`，保存后由站点构建处理。

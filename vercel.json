@@ -3,6 +3,6 @@
   "framework": null,
   "cleanUrls": true,
   "installCommand": "pnpm install --frozen-lockfile",
-  "buildCommand": "pnpm build:packages && pnpm --filter website exec cross-env BUILD_FAST=true node ../packages/docusaurus/bin/docusaurus.mjs build --locale en",
+  "buildCommand": "pnpm build:packages && pnpm --filter website exec cross-env BUILD_FAST=true node ../packages/docusaurus/bin/docusaurus.mjs build",
   "outputDirectory": "website/build"
 }

@@ -178,7 +178,7 @@ export default async function createConfigAsync() {
     projectName: 'docusaurus',
     baseUrl,
     baseUrlIssueBanner: true,
-    url: 'https://docusaurus.io',
+    url: 'https://kb.n8nmydomain.com',
     future: {
       v4: !isSlower, // Not accurate, but good enough
       faster: isSlower
@@ -213,21 +213,19 @@ export default async function createConfigAsync() {
 
       localeConfigs: {
         [defaultLocale]: {
+          label: 'English',
+          htmlLang: 'en',
           // Forces the translation process to run for default locale
           // Permits to dogfood translation key conflicts detection
           translate: true,
         },
+        'zh-CN': {
+          label: '简体中文',
+          htmlLang: 'zh-CN',
+        },
       },
 
-      locales:
-        isDeployPreview || isBranchDeploy
-          ? // Deploy preview and branch deploys: keep them fast!
-            [defaultLocale]
-          : isI18nStaging
-            ? // Staging locales: https://docusaurus-i18n-staging.netlify.app/
-              [defaultLocale, 'ja']
-            : // Production locales
-              [defaultLocale, 'fr', 'pt-BR', 'ko', 'zh-CN'],
+      locales: [defaultLocale, 'zh-CN'],
     },
     markdown: {
       format: 'detect',
@@ -370,12 +368,6 @@ export default async function createConfigAsync() {
           id: 'community',
           path: 'community',
           routeBasePath: 'community',
-          editUrl: ({locale, versionDocsDirPath, docPath}) => {
-            if (locale !== defaultLocale) {
-              return `https://crowdin.com/project/docusaurus-v2/${locale}`;
-            }
-            return `https://github.com/facebook/docusaurus/edit/main/website/${versionDocsDirPath}/${docPath}`;
-          },
           remarkPlugins: [npm2yarn],
           editCurrentVersion: true,
           sidebarPath: './sidebarsCommunity.js',
@@ -504,15 +496,6 @@ export default async function createConfigAsync() {
             sidebarPath: 'sidebars.ts',
             // sidebarCollapsible: false,
             // sidebarCollapsed: true,
-            editUrl: ({locale, docPath}) => {
-              if (locale !== defaultLocale) {
-                return `https://crowdin.com/project/docusaurus-v2/${locale}`;
-              }
-              // We want users to submit updates to the upstream/next version!
-              // Otherwise we risk losing the update on the next release.
-              const nextVersionDocsDirPath = 'docs';
-              return `https://github.com/facebook/docusaurus/edit/main/website/${nextVersionDocsDirPath}/${docPath}`;
-            },
             admonitions: {
               keywords: ['my-custom-admonition'],
             },
@@ -554,12 +537,6 @@ export default async function createConfigAsync() {
             path: 'blog',
             showLastUpdateAuthor: showLastUpdate,
             showLastUpdateTime: showLastUpdate,
-            editUrl: ({locale, blogDirPath, blogPath}) => {
-              if (locale !== defaultLocale) {
-                return `https://crowdin.com/project/docusaurus-v2/${locale}`;
-              }
-              return `https://github.com/facebook/docusaurus/edit/main/website/${blogDirPath}/${blogPath}`;
-            },
             remarkPlugins: [npm2yarn],
             postsPerPage: 5,
             feedOptions: {
@@ -584,12 +561,6 @@ export default async function createConfigAsync() {
           } satisfies BlogOptions,
           pages: {
             remarkPlugins: [npm2yarn],
-            editUrl: ({locale, pagesPath}) => {
-              if (locale !== defaultLocale) {
-                return `https://crowdin.com/project/docusaurus-v2/${locale}`;
-              }
-              return `https://github.com/facebook/docusaurus/edit/main/website/src/pages/${pagesPath}`;
-            },
             showLastUpdateAuthor: showLastUpdate,
             showLastUpdateTime: showLastUpdate,
           } satisfies PageOptions,
@@ -640,7 +611,6 @@ export default async function createConfigAsync() {
       },
       announcementBar: {
         id: `announcementBar-v${announcedVersion}`,
-        // content: `⭐️ If you like Docusaurus, give it a star on <a target="_blank" rel="noopener noreferrer" href="https://github.com/facebook/docusaurus">GitHub</a> and follow us on <a target="_blank" rel="noopener noreferrer" href="https://x.com/docusaurus">X ${TwitterSvg}</a>`,
         content: `🎉️ <b><a target="_blank" href="https://docusaurus.io/blog/releases/${announcedVersion}">Docusaurus v${announcedVersion}</a> is out!</b> 🥳️`,
       },
       prism: {
@@ -781,22 +751,6 @@ export default async function createConfigAsync() {
           {
             type: 'localeDropdown',
             position: 'right',
-            dropdownItemsAfter: [
-              {
-                type: 'html',
-                value: '<hr style="margin: 0.3rem 0;">',
-              },
-              {
-                href: 'https://github.com/facebook/docusaurus/issues/3526',
-                label: 'Help Us Translate',
-              },
-            ],
-          },
-          {
-            href: 'https://github.com/facebook/docusaurus',
-            position: 'right',
-            className: 'header-github-link',
-            'aria-label': 'GitHub repository',
           },
         ]
           // TODO fix type
@@ -855,10 +809,6 @@ export default async function createConfigAsync() {
               {
                 label: 'Changelog',
                 to: '/changelog',
-              },
-              {
-                label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
               },
               {
                 label: 'X',
