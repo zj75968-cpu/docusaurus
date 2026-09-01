@@ -1,123 +1,273 @@
-<div align="center">
-  <h1 align="center">
-    Docusaurus
-    <br />
-    <br />
-    <a href="https://docusaurus.io">
-      <img src="https://docusaurus.io/img/slash-introducing.svg" alt="Docusaurus">
-    </a>
-  </h1>
-</div>
+# Knowledge Base
 
-<p align="center">
-  <a href="https://x.com/docusaurus"><img src="https://img.shields.io/twitter/follow/docusaurus.svg?style=social" align="right" alt="Twitter Follow" /></a>
-  <a href="#backers" alt="sponsors on Open Collective"><img src="https://opencollective.com/Docusaurus/backers/badge.svg" /></a>
-  <a href="#sponsors" alt="Sponsors on Open Collective"><img src="https://opencollective.com/Docusaurus/sponsors/badge.svg" /></a>
-  <a href="https://www.npmjs.com/package/@docusaurus/core"><img src="https://img.shields.io/npm/v/@docusaurus/core.svg?style=flat" alt="npm version"></a>
-  <a href="https://github.com/facebook/docusaurus/actions/workflows/tests.yml"><img src="https://github.com/facebook/docusaurus/actions/workflows/tests.yml/badge.svg" alt="GitHub Actions status"></a>
-  <a href="CONTRIBUTING.md#pull-requests"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome"></a>
-  <a href="https://discord.gg/docusaurus"><img src="https://img.shields.io/discord/102860784329052160.svg" align="right" alt="Discord Chat" /></a>
-  <a href="https://github.com/prettier/prettier"><img alt="code style: prettier" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg"></a>
-  <a href="#license"><img src="https://img.shields.io/github/license/sourcerer-io/hall-of-fame.svg?colorB=ff0000"></a>
-  <a href="https://github.com/facebook/jest"><img src="https://img.shields.io/badge/tested_with-jest-99424f.svg" alt="Tested with Jest"></a>
-  <a href="https://argos-ci.com" target="_blank" rel="noreferrer noopener" aria-label="Covered by Argos"><img src="https://argos-ci.com/badge.svg" alt="Covered by Argos" width="133" height="20" /></a>
-  <a href="https://gitpod.io/#https://github.com/facebook/docusaurus"><img src="https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod" alt="Gitpod Ready-to-Code"/></a>
-  <a href="https://app.netlify.com/sites/docusaurus-2/deploys"><img src="https://api.netlify.com/api/v1/badges/9e1ff559-4405-4ebe-8718-5e21c0774bc8/deploy-status" alt="Netlify Status"></a>
-  <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Ffacebook%2Fdocusaurus%2Ftree%2Fmain%2Fexamples%2Fclassic&project-name=my-docusaurus-site&repo-name=my-docusaurus-site"><img src="https://vercel.com/button" alt="Deploy with Vercel"/></a>
-  <a href="https://app.netlify.com/start/deploy?repository=https://github.com/slorber/docusaurus-starter"><img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify"></a>
-</p>
+这是基于 [Docusaurus](https://docusaurus.io/) 构建的个人知识库站点。本仓库同时保留 Docusaurus monorepo，并在其网站、文档插件和部署配置上增加知识库写作、CMS、OAuth、WikiLink、知识图谱及跨项目发布能力。
 
-## Introduction
+## 线上入口
 
-Docusaurus is a project for building, deploying, and maintaining open source project websites easily.
+- [站点首页](https://kb.n8nmydomain.com/)
+- [英文文档](https://kb.n8nmydomain.com/docs)
+- [中文站点](https://kb.n8nmydomain.com/zh-CN/)
+- [Decap CMS](https://kb.n8nmydomain.com/admin)
 
-Short on time? Check out our [5-minute tutorial ⏱️](https://tutorial.docusaurus.io)!
+## 主要能力
 
-**Tip**: use **[docusaurus.new](https://docusaurus.new)** to test Docusaurus immediately in a playground.
+- 使用标准 Markdown 维护英文和简体中文知识库文章。
+- 兼容 Obsidian 工作流及 `[[WikiLink]]` 文档链接。
+- 根据文档链接生成知识图谱。
+- 通过 Decap CMS 创建、编辑和管理知识库内容及图片。
+- 通过服务端 GitHub OAuth API 为 CMS 提供认证。
+- 使用仓库级 Skill 执行校验、构建、Git 发布和可选生产部署。
+- 使用全局 Skill 从其他项目提取、审阅并沉淀可公开的知识。
 
-- **Simple to Start**
+CMS 只管理 Knowledge Base，不用于维护整套 Docusaurus 上游文档。
 
-> Docusaurus is built in a way so that it can [get running](https://docusaurus.io/docs/installation) in as little time as possible. We've built Docusaurus to handle the website build process so you can focus on your project.
+## 上游关系
 
-- **Localizable**
+本仓库是 [`facebook/docusaurus`](https://github.com/facebook/docusaurus) 的定制 fork，仍包含上游的 packages、website、测试和构建系统：
 
-> Docusaurus ships with [localization support](https://docusaurus.io/docs/i18n/introduction) via CrowdIn. Empower and grow your international community by translating your documentation.
+- `fork`：[`zj75968-cpu/docusaurus`](https://github.com/zj75968-cpu/docusaurus)，本项目唯一允许推送的远程仓库。
+- `origin`：[`facebook/docusaurus`](https://github.com/facebook/docusaurus)，只作为上游来源，禁止推送。
 
-- **Customizable**
+## 核心目录
 
-> While Docusaurus ships with the key pages and sections you need to get started, including a home page, a docs section, a [blog](https://docusaurus.io/docs/blog), and additional support pages, it is also [customizable](https://docusaurus.io/docs/creating-pages) to ensure you have a site that is [uniquely yours](https://docusaurus.io/docs/styling-layout).
+| 路径 | 用途 |
+| --- | --- |
+| `website/docs/knowledge-base/` | 英文知识库源文档 |
+| `website/i18n/zh-CN/docusaurus-plugin-content-docs/current/knowledge-base/` | 简体中文翻译文档 |
+| `website/static/img/uploads/` | 知识库上传图片 |
+| `website/static/admin/` | Decap CMS 页面和配置 |
+| `api/_oauth.mjs` | OAuth 公共实现 |
+| `api/auth.mjs` | GitHub OAuth 授权入口 |
+| `api/callback.mjs` | GitHub OAuth 回调入口 |
+| `api/_oauth.test.mjs` | OAuth Node.js 测试 |
+| `.cursor/skills/publish-knowledge-base/` | 当前仓库的权威发布流程及校验器 |
+| `tools/cursor-skills/publish-project-knowledge/` | 跨项目全局 Skill 的安装源 |
+| `tools/cursor-skills/install-publish-project-knowledge.ps1` | 全局 Skill 安装器 |
+| `vercel.json` | Vercel 构建和路由配置 |
 
-## Installation
+## 本地开发
 
-Use the initialization CLI to create your site:
+### 环境要求
 
-```bash
-npm init docusaurus@latest
+- Node.js `>= 24.14`
+- pnpm `>= 11.5`
+- Git
+
+以下示例固定使用 `pnpm@11.10.0`，因此 Windows 电脑不需要预先全局安装 pnpm。如果本机已有兼容版本，也可以把 `npx --yes pnpm@11.10.0` 替换为 `pnpm`。
+
+### 安装依赖
+
+在仓库根目录运行：
+
+```powershell
+npx --yes pnpm@11.10.0 install --frozen-lockfile
 ```
 
-[Read the docs](https://docusaurus.io/docs/installation) for any further information.
+安装过程会构建 monorepo packages，首次执行可能需要一些时间。
 
-## Contributing
+### 启动开发站点
 
-We've released Docusaurus because it helps us better scale and supports the many OSS projects at Meta. We hope that other organizations can benefit from the project. We are thankful for any contributions from the community.
+```powershell
+npx --yes pnpm@11.10.0 start:website
+```
 
-### [Code of Conduct](https://code.fb.com/codeofconduct)
+### 类型检查与生产构建
 
-Meta has adopted a Code of Conduct that we expect project participants to adhere to. Please read [the full text](https://code.fb.com/codeofconduct) so that you can understand what actions will and will not be tolerated.
+```powershell
+npx --yes pnpm@11.10.0 --filter website typecheck
+npx --yes pnpm@11.10.0 build:website:en
+npx --yes pnpm@11.10.0 --filter website build --locale zh-CN
+```
 
-### Contributing guide
+英文和中文生产构建会验证文档解析、WikiLink 转换和知识图谱产物。发布文章前应同时运行两种语言的构建。
 
-Read our [contributing guide](https://github.com/facebook/docusaurus/blob/main/CONTRIBUTING.md) to learn about our development process, how to propose bugfixes and improvements, and how to build and test your changes to Docusaurus.
+### 预览生产构建
 
-### Beginner-friendly bugs
+```powershell
+npx --yes pnpm@11.10.0 serve:website
+```
 
-To help you get your feet wet and get you familiar with our contribution process, we have a list of [beginner-friendly bugs](https://github.com/facebook/docusaurus/labels/good%20first%20issue) that might contain smaller issues to tackle first. This is a great place to get started.
+### OAuth 测试
 
-## Contact
+```powershell
+node --test api/_oauth.test.mjs
+```
 
-We have a few channels for contact:
+### 知识库专用校验
 
-- [Discord](https://discord.gg/docusaurus):
-  - `#general` for those using Docusaurus.
-  - `#contributors` for those wanting to contribute to the Docusaurus core.
-- [@docusaurus](https://x.com/docusaurus) X
-- [GitHub Issues](https://github.com/facebook/docusaurus/issues)
+```powershell
+node .cursor/skills/publish-knowledge-base/scripts/validate.mjs
+```
 
-## Contributors
+校验器会检查 UTF-8、文件扩展名、Front Matter、分类和 slug、中文与英文文档对应关系、本地图片、Markdown 链接、WikiLink，以及不受支持的 Obsidian 图片嵌入。
 
-This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)]. <a href="https://github.com/facebook/docusaurus/graphs/contributors"><img src="https://opencollective.com/Docusaurus/contributors.svg?width=890&button=false" /></a>
+## 编写知识库文章
 
-## Backers
+### 文件位置
 
-Thank you to all our backers! 🙏 [Become a backer](https://opencollective.com/Docusaurus#backer)
+英文文章放在：
 
-<a href="https://opencollective.com/Docusaurus#backers" target="_blank"><img src="https://opencollective.com/Docusaurus/backers.svg?width=890"></a>
+```text
+website/docs/knowledge-base/<category>/<slug>.md
+```
 
-## Sponsors
+简体中文翻译放在：
 
-Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [Become a sponsor](https://opencollective.com/Docusaurus#sponsor)
+```text
+website/i18n/zh-CN/docusaurus-plugin-content-docs/current/knowledge-base/<category>/<slug>.md
+```
 
-<a href="https://opencollective.com/Docusaurus/sponsor/0/website" target="_blank"><img src="https://opencollective.com/Docusaurus/sponsor/0/avatar.svg"></a> <a href="https://opencollective.com/Docusaurus/sponsor/1/website" target="_blank"><img src="https://opencollective.com/Docusaurus/sponsor/1/avatar.svg"></a>
+`<category>` 只能是 `general`、`guides` 或 `reference`。`<slug>` 使用小写字母、数字和连字符，并与文件名保持一致。
 
-## License
+知识库文章必须是 UTF-8 标准 Markdown `.md`，不要使用 `.mdx`。
 
-Docusaurus is [MIT licensed](./LICENSE).
+### Front Matter
 
-The Docusaurus documentation (e.g., `.md` files in the `/docs` folder) is [Creative Commons licensed](./LICENSE-docs).
+新文章至少需要以下信息；为了兼容 CMS 和仓库校验器，还需要让 `slug`、`category` 与实际路径一致：
 
-## Special thanks
+```yaml
+---
+title: 清晰的文章标题
+description: 一句话说明读者可以完成什么。
+slug: example-article
+category: guides
+sidebar_position: 100
+---
+```
 
-<p>
-  <a href="http://www.browserstack.com/" target="_blank">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="./admin/img/browserstack-dark-mode-logo.svg#gh-dark-mode-only">
-      <img alt="BrowserStack logo" src="./admin/img/browserstack-light-mode-logo.svg#gh-light-mode-only" height="50px" />
-    </picture>
-  </a>
-</p>
+其中 `title`、`description` 和 `sidebar_position` 是基础必填字段，`sidebar_position` 必须是正整数。正文从 `##` 开始，不要重复写一个与 Front Matter 标题相同的 `#` 标题。
 
-[BrowserStack](http://www.browserstack.com/) supports us with [free access for open source](https://www.browserstack.com/open-source).
+### 图片
 
-[![Rocket Validator logo](./admin/img/rocketvalidator-logo.png)](https://rocketvalidator.com/)
+图片统一放在 `website/static/img/uploads/`，使用描述性的小写文件名，并通过站点绝对路径引用：
 
-[Rocket Validator](https://rocketvalidator.com/) helps us find [HTML markup and accessibility issues](https://rocketvalidator.com/stats/docusaurus.io).
+```markdown
+![知识图谱界面](/img/uploads/knowledge-graph-view.png)
+```
+
+不要提交 `.obsidian/` 元数据，也不要使用 Obsidian 的 `![[image.png]]` 图片语法。
+
+### WikiLink
+
+站点支持文档 WikiLink，例如：
+
+```markdown
+[[knowledge-base]] [[knowledge-base|知识库概览]] [[../guides/getting-started|开始使用]]
+```
+
+目标必须是同一语言下已经存在的知识库 `.md` 文档。图片仍需使用标准 Markdown 语法。
+
+### 中英文规则
+
+中文目录属于 Docusaurus 翻译树，中文文档通常必须有相同相对路径和 document ID 的英文源文档。创建中文翻译时应先创建英文源文档。
+
+如果确实需要独立的中文文章，应新增独立 docs plugin，或同步创建对应英文源文档；不要直接在现有翻译树中添加没有英文来源的中文文档。
+
+## 内容管理与 OAuth
+
+Decap CMS 位于 `/admin`，配置文件为 `website/static/admin/config.yml`。它通过以下服务端入口完成 GitHub OAuth：
+
+- `/api/auth`
+- `/api/callback`
+
+OAuth 凭据只应保存在 Vercel Production 环境变量中。禁止把 GitHub Client Secret、OAuth token、Vercel token、cookie 或其他凭据写入文章、配置示例、日志或 Git 历史。
+
+## 发布 Skills
+
+### 仓库级 `publish-knowledge-base`
+
+在本仓库中，可通过 Cursor 的 `/publish-knowledge-base` 使用 `.cursor/skills/publish-knowledge-base/SKILL.md`。这是知识库发布流程的唯一权威层，负责：
+
+1. 检查仓库、分支、远程地址和已有工作区改动。
+2. 准备文章、翻译和图片。
+3. 运行知识库校验、格式化、类型检查及中英文生产构建。
+4. 只暂存本次发布文件，执行 Git hook 后提交。
+5. 只推送到 `fork/main`。
+6. 仅在用户明确授权生产部署后执行 Vercel 手工部署和线上验证。
+
+任何校验、构建、Git hook、推送、部署或线上验证失败都会中止流程。发布内容不等于自动授权生产部署。
+
+### 全局 `publish-project-knowledge`
+
+从知识库仓库根目录安装或更新全局 Skill：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\cursor-skills\install-publish-project-knowledge.ps1
+```
+
+重新加载 Cursor 后，可以在任意项目中调用 `/publish-project-knowledge`。该流程会：
+
+1. 只读取用户明确选择的文档、笔记或代码。
+2. 检查并移除不适合公开的凭据、内部地址和本机路径。
+3. 整理知识库草稿，并在跨仓库写入前让用户审阅。
+4. 通过本地配置解析知识库仓库位置。
+5. 复制确认后的文章和必要图片。
+6. 把后续校验、Git 和可选部署交给仓库级 `publish-knowledge-base`。
+
+安装器只保存知识库仓库路径，不复制或保存凭据。
+
+### 在另一台电脑安装
+
+```powershell
+git clone -o fork https://github.com/zj75968-cpu/docusaurus.git
+Set-Location .\docusaurus
+git remote add origin https://github.com/facebook/docusaurus.git
+git branch --set-upstream-to=fork/main main
+npx --yes pnpm@11.10.0 install --frozen-lockfile
+powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\cursor-skills\install-publish-project-knowledge.ps1
+```
+
+另一台电脑需要自行配置 Git/GitHub 认证。若需要生产部署，还必须自行登录 Vercel，并把仓库链接到已有项目；不要把认证数据复制进仓库。
+
+## Git 安全边界
+
+- 开始修改前先运行 `git status --short --branch`，保护所有已有改动。
+- `main` 必须跟踪 `fork/main`。
+- 只按明确路径暂存本次文件，不使用 `git add .` 混入无关内容。
+- 只允许 `git push fork main:main`。
+- 禁止向 `origin` 推送，禁止 force push，禁止绕过 Git hook。
+- `.env*`、`.vercel/`、`.obsidian/`、凭据和生成的构建产物不得进入提交。
+
+## Vercel 手工生产部署
+
+当前未连接 Vercel Git 自动部署；推送到 `fork/main` 不会自动发布站点。生产部署必须得到用户在当前请求中的明确授权，并从已正确 link 的仓库根目录手工执行。
+
+先核对已链接的 Vercel 项目：
+
+```powershell
+npx --yes vercel@59.1.4 project inspect --non-interactive
+```
+
+获得授权后执行生产部署，并保存 CLI 返回的 deployment URL：
+
+```powershell
+npx --yes vercel@59.1.4 deploy --prod --yes --archive=tgz
+```
+
+用实际 URL 等待并检查部署状态：
+
+```powershell
+npx --yes vercel@59.1.4 inspect "<deployment-url>" --wait --timeout 4m
+```
+
+必要时列出项目部署记录进行交叉确认：
+
+```powershell
+npx --yes vercel@59.1.4 ls docusaurus-knowledge-base
+```
+
+命令出现超时、上传错误或 `fetch failed` 时，不能直接判断部署成功或失败。必须通过 `ls`、`inspect` 和线上 HTTP 结果核对实际状态。确认部署 Ready 后，再验证以下稳定地址及本次文章页面：
+
+- `https://kb.n8nmydomain.com/`
+- `https://kb.n8nmydomain.com/docs`
+- `https://kb.n8nmydomain.com/zh-CN/`
+- `https://kb.n8nmydomain.com/admin`
+
+## 许可证与归属
+
+本 fork 基于 Meta 开源的 Docusaurus，并保留其上游归属：
+
+- Docusaurus 源代码使用 [MIT License](./LICENSE)。
+- Docusaurus 上游文档内容使用 [Creative Commons License](./LICENSE-docs)。
+
+有关 Docusaurus 框架本身的开发、贡献和社区信息，请访问[上游仓库](https://github.com/facebook/docusaurus)与[官方文档](https://docusaurus.io/docs)。
