@@ -1,6 +1,6 @@
 ---
 name: publish-knowledge-base
-description: Publish or update this repository's English or Simplified Chinese knowledge-base articles from Markdown or Obsidian through validation, a scoped Git commit and fork/main push, and an explicitly authorized manual Vercel production deployment. Use for requests to create, edit, translate, upload, validate, publish, deploy, or troubleshoot files under website/docs/knowledge-base, the matching zh-CN knowledge-base translation tree, or website/static/img/uploads.
+description: Publish or update this repository's Chinese source knowledge-base articles and English translations from Markdown or Obsidian through validation, a scoped Git commit and fork/main push, and an explicitly authorized manual Vercel production deployment. Use for requests to create, edit, translate, upload, validate, publish, deploy, or troubleshoot files under website/docs/knowledge-base, the matching en knowledge-base translation tree, or website/static/img/uploads.
 ---
 
 # Publish the Knowledge Base
@@ -86,11 +86,11 @@ Use UTF-8 standard Markdown (`.md`), never `.mdx`, for knowledge-base articles.
 
 | Content | Repository-relative location |
 | --- | --- |
-| English source | `website/docs/knowledge-base/<category>/<slug>.md` |
-| Simplified Chinese translation | `website/i18n/zh-CN/docusaurus-plugin-content-docs/current/knowledge-base/<category>/<slug>.md` |
+| Chinese source | `website/docs/knowledge-base/<category>/<slug>.md` |
+| English translation | `website/i18n/en/docusaurus-plugin-content-docs/current/knowledge-base/<category>/<slug>.md` |
 | Uploaded media | `website/static/img/uploads/<descriptive-name>.<ext>` |
 
-`<category>` must be `general`, `guides`, or `reference`. Use a lowercase, hyphenated `<slug>` and make the filename, `slug`, and route segment identical. A Chinese document is a translation with the same relative path/document ID as its English source; create the English file first. Do not create an independent Chinese-only document in this translation tree.
+`<category>` must be `general`, `guides`, or `reference`. Use a lowercase, hyphenated `<slug>` and make the filename, `slug`, and route segment identical when `slug` is present. An English document is a translation with the same relative path/document ID as its Chinese source; create the Chinese source first. Chinese source articles may be published before translation, but do not create an independent English document in the translation tree.
 
 Use this front matter for new articles:
 
@@ -128,17 +128,17 @@ Do not use Obsidian image embeds such as `![[image.png]]`; the site supports sta
 
 ### WikiLinks
 
-The docs plugin resolves WikiLinks and adds them to the knowledge graph. Use targets relative to the current document, optionally with a label:
+The docs plugin resolves WikiLinks and adds them to the knowledge graph. Use a slug for a document in the same directory; for cross-category links, use the content-root-relative document ID (`<category>/<slug>`). Labels are optional:
 
 ```markdown
-[[knowledge-base]] [[knowledge-base|Knowledge Base overview]] [[../guides/getting-started|Getting started]]
+[[knowledge-base]] [[general/knowledge-base|Knowledge Base overview]] [[guides/getting-started|Getting started]]
 ```
 
 The target must resolve to an existing knowledge-base `.md` document in the same locale. Do not target `.mdx`, do not use WikiLinks for images, and do not assume an unresolved WikiLink will become valid at deploy time.
 
 ## 4. Validate before staging
 
-Run the repository-specific validator from the root. It checks UTF-8, `.md` paths, required front matter, category/slug consistency, Chinese-to-English document identity, local images, local Markdown document links, WikiLinks, and unsupported Obsidian image embeds.
+Run the repository-specific validator from the root. It checks UTF-8, `.md` paths, required front matter, optional category/slug consistency, English-to-Chinese document identity, local images, local Markdown document links, WikiLinks, and unsupported Obsidian image embeds.
 
 ```powershell
 node .cursor/skills/publish-knowledge-base/scripts/validate.mjs
@@ -153,7 +153,7 @@ $publishFiles = @(
   git diff --cached --name-only --diff-filter=ACMR
   git ls-files --others --exclude-standard
 ) | Where-Object {
-  $_ -match '^(website/docs/knowledge-base/|website/i18n/zh-CN/docusaurus-plugin-content-docs/current/knowledge-base/|website/static/img/uploads/|\.cursor/skills/publish-knowledge-base/)'
+  $_ -match '^(website/docs/knowledge-base/|website/i18n/en/docusaurus-plugin-content-docs/current/knowledge-base/|website/static/img/uploads/|\.cursor/skills/publish-knowledge-base/)'
 } | Sort-Object -Unique
 
 if ($publishFiles.Count -eq 0) { throw "No knowledge-base publish files found." }
@@ -181,11 +181,11 @@ if ($LASTEXITCODE -ne 0) { throw "Website typecheck failed." }
 Before publishing content, run both production locale builds. These are authoritative for Docusaurus document resolution, WikiLink transforms, and knowledge-graph generation:
 
 ```powershell
-npx --yes pnpm@11.10.0 build:website:en
-if ($LASTEXITCODE -ne 0) { throw "English production build failed." }
-
 npx --yes pnpm@11.10.0 --filter website build --locale zh-CN
-if ($LASTEXITCODE -ne 0) { throw "Simplified Chinese production build failed." }
+if ($LASTEXITCODE -ne 0) { throw "Chinese production build failed." }
+
+npx --yes pnpm@11.10.0 --filter website build --locale en
+if ($LASTEXITCODE -ne 0) { throw "English production build failed." }
 ```
 
 Do not skip a failed build because a document looks correct in Obsidian. If dependencies are missing, run the locked install from section 2 and rerun the failed check.
@@ -293,9 +293,10 @@ After `inspect` succeeds, verify the stable domain rather than only the generate
 ```powershell
 $requiredUrls = @(
   "https://kb.n8nmydomain.com/",
-  "https://kb.n8nmydomain.com/docs",
-  "https://kb.n8nmydomain.com/zh-CN/",
-  "https://kb.n8nmydomain.com/admin"
+  "https://kb.n8nmydomain.com/en/",
+  "https://kb.n8nmydomain.com/docs/knowledge-base/general/knowledge-base",
+  "https://kb.n8nmydomain.com/en/docs/knowledge-base/general/knowledge-base",
+  "https://kb.n8nmydomain.com/admin/"
 )
 
 foreach ($url in $requiredUrls) {
@@ -306,8 +307,8 @@ foreach ($url in $requiredUrls) {
 
 Derive article URLs from the validated category and slug:
 
-- English: `https://kb.n8nmydomain.com/docs/knowledge-base/<category>/<slug>`
-- Simplified Chinese, when a translation was published: `https://kb.n8nmydomain.com/zh-CN/docs/knowledge-base/<category>/<slug>`
+- Chinese source: `https://kb.n8nmydomain.com/docs/knowledge-base/<category>/<slug>`
+- English, when a translation was published: `https://kb.n8nmydomain.com/en/docs/knowledge-base/<category>/<slug>`
 
 Request each published article URL, require HTTP 200, and assert that the response contains a distinctive new title or sentence:
 

@@ -20,7 +20,7 @@ Use only files the user explicitly selects, names, pastes, or attaches. Do not r
 Before drafting, determine:
 
 - source files or selected code;
-- English, Simplified Chinese, or both;
+- Chinese source, English translation, or both;
 - target reader and the task they should accomplish;
 - category: `general`, `guides`, or `reference`;
 - lowercase hyphenated slug;
@@ -72,7 +72,7 @@ Do not publish:
 
 Before transfer, inspect the draft and images for credential-like assignments, authorization headers, private URLs/IPs, home directories, and identifying data. Redact with explicit placeholders such as `<token>` or `<project-path>`. If safety is uncertain, stop and ask the user rather than copying the material.
 
-Use UTF-8 `.md`, not `.mdx`. New English articles use front matter like:
+Use UTF-8 `.md`, not `.mdx`. New Chinese source articles use front matter like:
 
 ```yaml
 ---
@@ -86,7 +86,15 @@ tags:
 ---
 ```
 
-Do not invent a Chinese-only document ID. When publishing Simplified Chinese, create or identify the matching English source first and keep the same category, slug, and relative path.
+Do not invent an English-only document ID. When publishing an English translation, create or identify the matching Chinese source first and keep the same category, slug, and relative path. A Chinese source article may be published before its translation is ready.
+
+When the draft uses WikiLinks, use the target slug only for a document in the same directory. Cross-category links must use the knowledge-base-root-relative document ID (`<category>/<slug>`), without the internal `knowledge-base/` prefix. Labels remain optional:
+
+```markdown
+[[knowledge-base]] [[general/knowledge-base|Knowledge Base overview]] [[guides/getting-started|Getting started]]
+```
+
+The target must exist in the same locale. Do not use WikiLinks for images or assume an unresolved target will become valid during deployment.
 
 ## 4. Review before writing across repositories
 
@@ -106,8 +114,8 @@ Use only these roots inside the resolved repository:
 
 | Content | Root |
 | --- | --- |
-| English | `website/docs/knowledge-base/` |
-| Simplified Chinese | `website/i18n/zh-CN/docusaurus-plugin-content-docs/current/knowledge-base/` |
+| Chinese source | `website/docs/knowledge-base/` |
+| English translation | `website/i18n/en/docusaurus-plugin-content-docs/current/knowledge-base/` |
 | Images | `website/static/img/uploads/` |
 
 Validate destination containment before writing. For example:
@@ -143,7 +151,7 @@ Get-Content -LiteralPath $repositorySkill -Raw
 Follow that Skill as the authoritative workflow. In particular:
 
 - protect pre-existing destination-repository changes;
-- run its repository validator, formatting, typecheck, and English/zh-CN production builds;
+- run its repository validator, formatting, typecheck, and Chinese/English production builds;
 - review and stage only the transferred article and images;
 - obey the Git hook and commit attribution requirements;
 - verify the remote and push only to `fork/main`, never `origin`;

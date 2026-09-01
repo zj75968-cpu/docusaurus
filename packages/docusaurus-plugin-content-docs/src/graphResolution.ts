@@ -80,6 +80,10 @@ export function createDocumentResolver(
   const lookup = new Map<string, string>();
   for (const document of documents) {
     addLookupKey(lookup, document.id, document.permalink);
+    const idSegments = normalizeKey(document.id).split('/');
+    if (idSegments.length > 2) {
+      addLookupKey(lookup, idSegments.slice(1).join('/'), document.permalink);
+    }
     addLookupKey(lookup, document.slug ?? document.id, document.permalink);
     addLookupKey(lookup, document.permalink, document.permalink);
     addLookupKey(lookup, sourceKey(document.source), document.permalink);

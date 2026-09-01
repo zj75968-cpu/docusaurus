@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" fill="none" stroke="#5eead4" stroke-opacity=".08" />
+    </pattern>
+    <radialGradient id="glow" cx="80%" cy="10%" r="70%">
+      <stop offset="0" stop-color="#0d9488" stop-opacity=".5" />
+      <stop offset="1" stop-color="#071a1a" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#071a1a" />
+  <rect width="1200" height="630" fill="url(#grid)" />
+  <rect width="1200" height="630" fill="url(#glow)" />
+  <g transform="translate(72 72)">
+    <rect width="72" height="72" rx="18" fill="#0f2f2e" stroke="#5eead4" stroke-opacity=".45" />
+    <path d="M20 21h31L27 51h27" fill="none" stroke="#5eead4" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
+    <circle cx="54" cy="19" r="5" fill="#f59e0b" />
+  </g>
+  <text x="72" y="235" fill="#5eead4" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="24" font-weight="700" letter-spacing="5">ZJ TECHNICAL KNOWLEDGE BASE</text>
+  <text x="72" y="345" fill="#f8fafc" font-family="Arial, sans-serif" font-size="72" font-weight="800">Connected knowledge.</text>
+  <text x="72" y="420" fill="#b8c9c7" font-family="Arial, sans-serif" font-size="32">Built from real technical practice.</text>
+  <text x="72" y="525" fill="#83aaa5" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="22">AI  /  SOFTWARE ENGINEERING  /  N8N  /  KNOWLEDGE  /  OPEN SOURCE</text>
+</svg>

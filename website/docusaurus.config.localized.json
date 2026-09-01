@@ -1,10 +1,10 @@
-{
+﻿{
   "tagline": {
-    "en": "Build optimized websites quickly, focus on your content",
-    "fr": "Construisez rapidement des sites web optimisés, concentrez-vous sur votre contenu"
+    "zh-CN": "连接 AI 自动化、软件工程、n8n、知识管理与开源实践",
+    "en": "Connecting AI automation, software engineering, n8n, knowledge management, and open source"
   },
   "remarkRehypeOptions_footnotes": {
-    "en": "Footnotes",
-    "fr": "Notes de bas de page"
+    "zh-CN": "脚注",
+    "en": "Footnotes"
   }
 }

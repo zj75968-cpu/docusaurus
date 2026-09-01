@@ -27,14 +27,18 @@ const documents: GraphDocument[] = [
     permalink: '/docs/nested/api',
     source: '@site/docs/nested/api.mdx',
   },
+  {
+    id: 'knowledge-base/reference/schema',
+    slug: '/knowledge-base/reference/schema',
+    permalink: '/docs/knowledge-base/reference/schema',
+    source: '@site/docs/knowledge-base/reference/schema.md',
+  },
 ];
 
 describe('graphResolution', () => {
   it('normalizes document keys without URL decorations', () => {
     expect(normalizeKey('./nested/api.mdx#methods')).toBe('nested/api');
-    expect(normalizeKey('@site/docs/guide.md?preview=true')).toBe(
-      'docs/guide',
-    );
+    expect(normalizeKey('@site/docs/guide.md?preview=true')).toBe('docs/guide');
     expect(normalizeKey('/nested/api/index.md')).toBe('nested/api');
   });
 
@@ -49,15 +53,21 @@ describe('graphResolution', () => {
   it('resolves relative, absolute, and ID links', () => {
     const resolve = createDocumentResolver(documents);
 
-    expect(resolve({source: 'docs/notes/intro.md', target: '../guide.md'})).toBe(
-      '/docs/guide',
-    );
+    expect(
+      resolve({source: 'docs/notes/intro.md', target: '../guide.md'}),
+    ).toBe('/docs/guide');
     expect(resolve({source: 'docs/intro.md', target: '/docs/nested/api'})).toBe(
       '/docs/nested/api',
     );
     expect(resolve({source: 'docs/intro.md', target: 'guide'})).toBe(
       '/docs/guide',
     );
+    expect(
+      resolve({
+        source: 'docs/knowledge-base/guides/intro.md',
+        target: 'reference/schema',
+      }),
+    ).toBe('/docs/knowledge-base/reference/schema');
     expect(
       resolve({source: '@site/docs/notes/intro.md', target: '../guide.md'}),
     ).toBe('/docs/guide');

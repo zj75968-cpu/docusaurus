@@ -72,6 +72,32 @@ describe('buildKnowledgeGraph', () => {
     expect(graph.backlinks['/docs/intro']).toEqual(['/docs/guide']);
   });
 
+  it('resolves content-root-relative wikilinks across categories', () => {
+    const graph = buildKnowledgeGraph([
+      entry({
+        id: 'knowledge-base/general/intro',
+        source: '@site/docs/knowledge-base/general/intro.md',
+        content: 'See [[guides/guide]].',
+      }),
+      entry({
+        id: 'knowledge-base/guides/guide',
+        source: '@site/docs/knowledge-base/guides/guide.md',
+        content: 'Guide.',
+      }),
+    ]);
+
+    expect(graph.edges).toEqual([
+      {
+        source: '/docs/knowledge-base/general/intro',
+        target: '/docs/knowledge-base/guides/guide',
+        type: 'wikilink',
+      },
+    ]);
+    expect(graph.backlinks['/docs/knowledge-base/guides/guide']).toEqual([
+      '/docs/knowledge-base/general/intro',
+    ]);
+  });
+
   it('keeps unresolved document links observable and ignores external and asset links', () => {
     const graph = buildKnowledgeGraph([
       entry({

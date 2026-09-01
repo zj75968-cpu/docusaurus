@@ -8,206 +8,87 @@
 @import url('react-medium-image-zoom/dist/styles.css');
 
 :root {
-  /*
-  See css var + hsl color palette technique:
-  https://blog.maximeheckel.com/posts/the-power-of-composition-with-css-variables/
-   */
-  --site-primary-hue-saturation: 167 68%;
-  --site-primary-hue-saturation-light: 167 56%; /* do we really need this extra one? */
-  --site-color-feedback-background: #f0f8ff;
-  --docusaurus-highlighted-code-line-bg: rgb(0 0 0 / 10%);
-  /* Use a darker color to ensure contrast, ideally we don't need important */
-  --ifm-breadcrumb-color-active: var(--ifm-color-primary-darker) !important;
-  --ifm-menu-color-active: var(--ifm-color-primary-darker) !important;
+  --ifm-color-primary: #0f766e;
+  --ifm-color-primary-dark: #0d6a63;
+  --ifm-color-primary-darker: #0c645e;
+  --ifm-color-primary-darkest: #0a524d;
+  --ifm-color-primary-light: #118279;
+  --ifm-color-primary-lighter: #12887f;
+  --ifm-color-primary-lightest: #149a8f;
+  --ifm-background-color: #fbfdfc;
+  --ifm-background-surface-color: #fff;
+  --ifm-font-family-base:
+    'Inter', ui-sans-serif, system-ui, -apple-system, 'BlinkMacSystemFont',
+    'Segoe UI', 'Noto Sans SC', sans-serif;
+  --ifm-heading-font-family: var(--ifm-font-family-base);
+  --ifm-heading-font-weight: 760;
+  --ifm-navbar-height: 4.25rem;
+  --ifm-navbar-shadow: 0 1px 0 rgb(15 118 110 / 10%);
+  --ifm-global-radius: 0.5rem;
+  --docusaurus-highlighted-code-line-bg: rgb(15 118 110 / 12%);
 }
 
 html[data-theme='dark'] {
-  --site-color-feedback-background: #2a2929;
-  --docusaurus-highlighted-code-line-bg: rgb(66 66 66 / 35%);
+  --ifm-color-primary: #5eead4;
+  --ifm-color-primary-dark: #42e5cc;
+  --ifm-color-primary-darker: #34e3c8;
+  --ifm-color-primary-darkest: #1fc5ad;
+  --ifm-color-primary-light: #7af0dc;
+  --ifm-color-primary-lighter: #88f2e0;
+  --ifm-color-primary-lightest: #b2f7eb;
+  --ifm-background-color: #071a1a;
+  --ifm-background-surface-color: #0b2423;
+  --docusaurus-highlighted-code-line-bg: rgb(94 234 212 / 12%);
 }
 
-/*
- * This selector will be dynamically replaced by the color generator. Don't put
- * other properties here.
- */
-[data-theme='light'] {
-  --ifm-color-primary: hsl(var(--site-primary-hue-saturation) 30%);
-  --ifm-color-primary-dark: hsl(var(--site-primary-hue-saturation) 26%);
-  --ifm-color-primary-darker: hsl(var(--site-primary-hue-saturation) 23%);
-  --ifm-color-primary-darkest: hsl(var(--site-primary-hue-saturation) 17%);
-
-  --ifm-color-primary-light: hsl(var(--site-primary-hue-saturation-light) 39%);
-  --ifm-color-primary-lighter: hsl(
-    var(--site-primary-hue-saturation-light) 47%
-  );
-  --ifm-color-primary-lightest: hsl(
-    var(--site-primary-hue-saturation-light) 58%
-  );
+body {
+  text-rendering: optimizeLegibility;
 }
 
-/*
- * This selector will be dynamically replaced by the color generator. Don't put
- * other properties here.
- */
-[data-theme='dark'] {
-  --ifm-color-primary: hsl(var(--site-primary-hue-saturation) 45%);
-  --ifm-color-primary-dark: hsl(var(--site-primary-hue-saturation) 41%);
-  --ifm-color-primary-darker: hsl(var(--site-primary-hue-saturation) 38%);
-  --ifm-color-primary-darkest: hsl(var(--site-primary-hue-saturation) 32%);
+.navbar {
+  backdrop-filter: blur(18px);
+  background: rgb(251 253 252 / 88%);
+}
 
-  --ifm-color-primary-light: hsl(var(--site-primary-hue-saturation-light) 54%);
-  --ifm-color-primary-lighter: hsl(
-    var(--site-primary-hue-saturation-light) 62%
-  );
-  --ifm-color-primary-lightest: hsl(
-    var(--site-primary-hue-saturation-light) 73%
-  );
+html[data-theme='dark'] .navbar {
+  background: rgb(7 26 26 / 88%);
+}
+
+.navbar__brand {
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+
+.navbar__logo img {
+  border-radius: 0.5rem;
 }
 
 .footer--dark {
-  --ifm-footer-background-color: #2b3137;
+  --ifm-footer-background-color: #061514;
 }
 
-.unique-tabs .tabs__item {
-  line-height: 16px;
-  margin-right: 8px;
+.footer__title {
+  color: #5eead4;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
-.unique-tabs .tabs__item--active {
-  border: 0;
-  color: #fff;
-  border-radius: var(--ifm-global-radius);
-  background-color: var(--ifm-tabs-color-active);
+.markdown > h1:first-child {
+  letter-spacing: -0.035em;
 }
 
-[data-theme='light'] .themedDocusaurus [fill='#FFFF50'] {
-  fill: greenyellow;
-}
-
-[data-theme='dark'] .themedDocusaurus [fill='#FFFF50'] {
-  fill: seagreen;
-}
-
-[data-theme='light'] .DocSearch {
-  /* --docsearch-primary-color: var(--ifm-color-primary); */
-  /* --docsearch-text-color: var(--ifm-font-color-base); */
-  --docsearch-muted-color: var(--ifm-color-emphasis-700);
-  --docsearch-container-background: rgb(94 100 112 / 70%);
-  /* Modal */
-  --docsearch-modal-background: var(--ifm-color-secondary-lighter);
-  /* Button */
-  --docsearch-search-button-background: var(--ifm-color-secondary);
-  --docsearch-search-button-text-color: var(--docsearch-muted-color);
-  /* Search box */
-  --docsearch-searchbox-background: var(--ifm-color-secondary);
-  --docsearch-searchbox-focus-background: var(--ifm-color-white);
-  /* Hit */
-  --docsearch-hit-color: var(--ifm-font-color-base);
-  --docsearch-hit-active-color: var(--ifm-color-white);
-  --docsearch-hit-background: var(--ifm-color-white);
-  /* Footer */
-  --docsearch-footer-background: var(--ifm-color-white);
-}
-
-[data-theme='dark'] .DocSearch {
-  --docsearch-text-color: var(--ifm-font-color-base);
-  --docsearch-muted-color: var(--ifm-color-secondary-darkest);
-  --docsearch-container-background: rgb(47 55 69 / 70%);
-  /* Modal */
-  --docsearch-modal-background: var(--ifm-background-color);
-  /* Button */
-  --docsearch-search-button-background: var(--ifm-background-color);
-  --docsearch-search-button-text-color: var(--docsearch-muted-color);
-  /* Search box */
-  --docsearch-searchbox-background: var(--ifm-background-color);
-  --docsearch-searchbox-focus-background: var(--ifm-color-black);
-  /* Hit */
-  --docsearch-hit-color: var(--ifm-font-color-base);
-  --docsearch-hit-active-color: var(--ifm-color-white);
-  --docsearch-hit-background: var(--ifm-color-emphasis-100);
-  /* Footer */
-  --docsearch-footer-background: var(--ifm-background-surface-color);
-  --docsearch-key-gradient: linear-gradient(
-    -26.5deg,
-    var(--ifm-color-emphasis-200) 0%,
-    var(--ifm-color-emphasis-100) 100%
-  );
-}
-
-.theme-announcement-bar {
-  font-size: 20px;
-
-  /*
-  --site-announcement-bar-stripe-color1: hsl(
-    var(--site-primary-hue-saturation) 85%
-  );
-  --site-announcement-bar-stripe-color2: hsl(
-    var(--site-primary-hue-saturation) 95%
-  );
-   */
-  --site-announcement-bar-stripe-color1: #e8d7ff;
-  --site-announcement-bar-stripe-color2: #ffe9d1;
-
-  background: repeating-linear-gradient(
-    35deg,
-    var(--site-announcement-bar-stripe-color1),
-    var(--site-announcement-bar-stripe-color1) 20px,
-    var(--site-announcement-bar-stripe-color2) 10px,
-    var(--site-announcement-bar-stripe-color2) 40px
-  );
-  font-weight: bold;
-}
-
-.screen-reader-only {
-  border: 0;
-  clip-path: polygon(0 0, 0 0, 0 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-  white-space: nowrap;
-}
-
-[data-theme='light'] img[src$='#gh-dark-mode-only'],
-[data-theme='dark'] img[src$='#gh-light-mode-only'] {
-  display: none;
-}
-
-/* Used to test CSS insertion order */
-.test-marker-site-custom-css-unique-rule {
-  content: 'site-custom-css-unique-rule';
-}
-
-.video-container {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  max-width: 560px;
-  margin: 0 auto;
-}
-
-.yt-lite > .lty-playbtn {
-  cursor: pointer;
-  border: 0;
-}
-
-.dropdown-separator {
-  margin: 0.3rem 0;
-}
-
-.dropdown-archived-versions {
-  font-size: 0.875rem;
-  padding: 0.2rem 0.5rem;
+.theme-doc-sidebar-container {
+  border-right-color: var(--ifm-color-emphasis-200) !important;
 }
 
 .code-block-error-line {
-  background-color: #ff000020;
   display: block;
   margin: 0 calc(-1 * var(--ifm-pre-padding));
   padding: 0 var(--ifm-pre-padding);
-  border-left: 3px solid #ff000080;
+  border-left: 3px solid #ef4444;
+  background-color: rgb(239 68 68 / 12%);
 }
 
 [data-rmiz-modal-overlay='visible'] {
@@ -218,16 +99,8 @@ html[data-theme='dark'] {
   background-color: rgb(0 0 0 / 95%);
 }
 
-html[data-navbar='false'] {
-  .navbar {
-    display: none;
+@media (width <= 996px) {
+  :root {
+    --ifm-navbar-height: 3.75rem;
   }
-
-  .theme-announcement-bar {
-    display: none;
-  }
-}
-
-html[data-red-border] div#__docusaurus {
-  border: red solid thick;
 }

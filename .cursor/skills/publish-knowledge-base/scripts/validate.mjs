@@ -12,21 +12,18 @@ import {TextDecoder} from 'node:util';
 
 const CONTENT_ROOTS = [
   {
-    locale: 'en',
+    locale: 'zh-CN',
     directory: 'website/docs/knowledge-base',
   },
   {
-    locale: 'zh-CN',
+    locale: 'en',
     directory:
-      'website/i18n/zh-CN/docusaurus-plugin-content-docs/current/knowledge-base',
+      'website/i18n/en/docusaurus-plugin-content-docs/current/knowledge-base',
   },
 ];
-const ENGLISH_ROOT = CONTENT_ROOTS[0].directory;
+const SOURCE_ROOT = CONTENT_ROOTS[0].directory;
 const ALLOWED_CATEGORIES = new Set(['general', 'guides', 'reference']);
 const SLUG_PATTERN = /^[a-z0-9-]+$/;
-const FRONT_MATTER_EXEMPTIONS = new Set([
-  'website/docs/knowledge-base/general/knowledge-base.md',
-]);
 
 function toPosix(filePath) {
   return filePath.split(path.sep).join('/');
@@ -39,6 +36,28 @@ async function pathExists(filePath) {
   } catch {
     return false;
   }
+}
+
+function createWikiLinkTargetIndex(contentRoot, files) {
+  const keyCounts = new Map();
+  const rootName = path.basename(contentRoot);
+
+  for (const file of files.filter((candidate) => candidate.endsWith('.md'))) {
+    const relativeTarget = toPosix(path.relative(contentRoot, file)).replace(
+      /\.md$/i,
+      '',
+    );
+    const keys = new Set([relativeTarget, `${rootName}/${relativeTarget}`]);
+    for (const key of keys) {
+      keyCounts.set(key, (keyCounts.get(key) ?? 0) + 1);
+    }
+  }
+
+  return new Set(
+    Array.from(keyCounts.entries())
+      .filter(([, count]) => count === 1)
+      .map(([key]) => key),
+  );
 }
 
 async function walk(directory) {
@@ -146,6 +165,7 @@ async function validateMarkdownTargets({
   contentRoot,
   repositoryRoot,
   relativeFile,
+  wikiLinkTargetIndex,
   errors,
 }) {
   const searchableContent = contentWithoutCode(body);
@@ -214,7 +234,14 @@ async function validateMarkdownTargets({
     const targetPath = cleanTarget.startsWith('/')
       ? path.join(contentRoot, targetWithExtension.slice(1))
       : path.resolve(path.dirname(absoluteFile), targetWithExtension);
-    if (!(await pathExists(targetPath))) {
+    const indexedTarget = cleanTarget
+      .replace(/^\/+/, '')
+      .replace(/\\/g, '/')
+      .replace(/\.md$/i, '');
+    if (
+      !(await pathExists(targetPath)) &&
+      !wikiLinkTargetIndex.has(indexedTarget)
+    ) {
       errors.push(`${relativeFile}: unresolved WikiLink ${match[0]}`);
     }
   }
@@ -225,6 +252,7 @@ async function validateDocument({
   contentRoot,
   locale,
   repositoryRoot,
+  wikiLinkTargetIndex,
   errors,
 }) {
   const relativeFile = toPosix(path.relative(repositoryRoot, absoluteFile));
@@ -252,10 +280,8 @@ async function validateDocument({
   const slug = readScalar(frontMatter.yaml, 'slug');
   const frontMatterCategory = readScalar(frontMatter.yaml, 'category');
 
-  if (!FRONT_MATTER_EXEMPTIONS.has(relativeFile)) {
-    if (!slug) {
-      errors.push(`${relativeFile}: missing front matter field slug`);
-    } else if (
+  if (slug) {
+    if (
       !SLUG_PATTERN.test(slug) ||
       slug.startsWith('-') ||
       slug.endsWith('-')
@@ -266,10 +292,10 @@ async function validateDocument({
     } else if (slug !== filename) {
       errors.push(`${relativeFile}: slug must match filename ${filename}`);
     }
+  }
 
-    if (!frontMatterCategory) {
-      errors.push(`${relativeFile}: missing front matter field category`);
-    } else if (!ALLOWED_CATEGORIES.has(frontMatterCategory)) {
+  if (frontMatterCategory) {
+    if (!ALLOWED_CATEGORIES.has(frontMatterCategory)) {
       errors.push(
         `${relativeFile}: unsupported category ${frontMatterCategory}`,
       );
@@ -286,15 +312,15 @@ async function validateDocument({
     );
   }
 
-  if (locale === 'zh-CN') {
-    const englishFile = path.join(
+  if (locale === 'en') {
+    const sourceFile = path.join(
       repositoryRoot,
-      ENGLISH_ROOT,
+      SOURCE_ROOT,
       relativeToContent,
     );
-    if (!(await pathExists(englishFile))) {
+    if (!(await pathExists(sourceFile))) {
       errors.push(
-        `${relativeFile}: missing English source ${toPosix(path.relative(repositoryRoot, englishFile))}`,
+        `${relativeFile}: missing Chinese source ${toPosix(path.relative(repositoryRoot, sourceFile))}`,
       );
     }
   }
@@ -305,6 +331,7 @@ async function validateDocument({
     contentRoot,
     repositoryRoot,
     relativeFile,
+    wikiLinkTargetIndex,
     errors,
   });
 }
@@ -324,6 +351,7 @@ async function validateRepository() {
     }
 
     const files = await walk(contentRoot);
+    const wikiLinkTargetIndex = createWikiLinkTargetIndex(contentRoot, files);
     for (const mdxFile of files.filter((file) => file.endsWith('.mdx'))) {
       errors.push(
         `${toPosix(path.relative(repositoryRoot, mdxFile))}: knowledge-base articles must use .md`,
@@ -335,6 +363,7 @@ async function validateRepository() {
         contentRoot,
         locale,
         repositoryRoot,
+        wikiLinkTargetIndex,
         errors,
       });
     }

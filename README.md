@@ -1,17 +1,18 @@
-# Knowledge Base
+# ZJ 技术知识库
 
-这是基于 [Docusaurus](https://docusaurus.io/) 构建的个人知识库站点。本仓库同时保留 Docusaurus monorepo，并在其网站、文档插件和部署配置上增加知识库写作、CMS、OAuth、WikiLink、知识图谱及跨项目发布能力。
+[ZJ 技术知识库](https://kb.n8nmydomain.com/) 是一个默认中文、提供英文翻译的实践型知识站点，长期整理 AI 自动化、软件工程、n8n、知识管理与开源经验。本仓库基于 Docusaurus monorepo 定制，包含 Markdown/Obsidian 写作、WikiLink、知识图谱、Decap CMS、安全 GitHub OAuth 和跨项目发布流程。
 
 ## 线上入口
 
-- [站点首页](https://kb.n8nmydomain.com/)
-- [英文文档](https://kb.n8nmydomain.com/docs)
-- [中文站点](https://kb.n8nmydomain.com/zh-CN/)
-- [Decap CMS](https://kb.n8nmydomain.com/admin)
+- [中文首页](https://kb.n8nmydomain.com/)
+- [中文知识库](https://kb.n8nmydomain.com/docs/knowledge-base/general/knowledge-base)
+- [English site](https://kb.n8nmydomain.com/en/)
+- [English knowledge base](https://kb.n8nmydomain.com/en/docs/knowledge-base/general/knowledge-base)
+- [Decap CMS](https://kb.n8nmydomain.com/admin/)
 
 ## 主要能力
 
-- 使用标准 Markdown 维护英文和简体中文知识库文章。
+- 使用标准 Markdown 维护中文源文章和同文档 ID 的英文翻译。
 - 兼容 Obsidian 工作流及 `[[WikiLink]]` 文档链接。
 - 根据文档链接生成知识图谱。
 - 通过 Decap CMS 创建、编辑和管理知识库内容及图片。
@@ -32,8 +33,8 @@ CMS 只管理 Knowledge Base，不用于维护整套 Docusaurus 上游文档。
 
 | 路径 | 用途 |
 | --- | --- |
-| `website/docs/knowledge-base/` | 英文知识库源文档 |
-| `website/i18n/zh-CN/docusaurus-plugin-content-docs/current/knowledge-base/` | 简体中文翻译文档 |
+| `website/docs/knowledge-base/` | 中文知识库源文档 |
+| `website/i18n/en/docusaurus-plugin-content-docs/current/knowledge-base/` | 英文翻译文档 |
 | `website/static/img/uploads/` | 知识库上传图片 |
 | `website/static/admin/` | Decap CMS 页面和配置 |
 | `api/_oauth.mjs` | OAuth 公共实现 |
@@ -75,11 +76,11 @@ npx --yes pnpm@11.10.0 start:website
 
 ```powershell
 npx --yes pnpm@11.10.0 --filter website typecheck
-npx --yes pnpm@11.10.0 build:website:en
 npx --yes pnpm@11.10.0 --filter website build --locale zh-CN
+npx --yes pnpm@11.10.0 --filter website build --locale en
 ```
 
-英文和中文生产构建会验证文档解析、WikiLink 转换和知识图谱产物。发布文章前应同时运行两种语言的构建。
+中文和英文生产构建会验证文档解析、WikiLink 转换和知识图谱产物。发布文章前应同时运行两种语言的构建。
 
 ### 预览生产构建
 
@@ -99,22 +100,22 @@ node --test api/_oauth.test.mjs
 node .cursor/skills/publish-knowledge-base/scripts/validate.mjs
 ```
 
-校验器会检查 UTF-8、文件扩展名、Front Matter、分类和 slug、中文与英文文档对应关系、本地图片、Markdown 链接、WikiLink，以及不受支持的 Obsidian 图片嵌入。
+校验器会检查 UTF-8、文件扩展名、Front Matter、可选分类与 slug 的路径一致性、英文翻译与中文源文档的对应关系、本地图片、Markdown 链接、WikiLink，以及不受支持的 Obsidian 图片嵌入。
 
 ## 编写知识库文章
 
 ### 文件位置
 
-英文文章放在：
+中文源文章放在：
 
 ```text
 website/docs/knowledge-base/<category>/<slug>.md
 ```
 
-简体中文翻译放在：
+英文翻译放在：
 
 ```text
-website/i18n/zh-CN/docusaurus-plugin-content-docs/current/knowledge-base/<category>/<slug>.md
+website/i18n/en/docusaurus-plugin-content-docs/current/knowledge-base/<category>/<slug>.md
 ```
 
 `<category>` 只能是 `general`、`guides` 或 `reference`。`<slug>` 使用小写字母、数字和连字符，并与文件名保持一致。
@@ -123,19 +124,17 @@ website/i18n/zh-CN/docusaurus-plugin-content-docs/current/knowledge-base/<catego
 
 ### Front Matter
 
-新文章至少需要以下信息；为了兼容 CMS 和仓库校验器，还需要让 `slug`、`category` 与实际路径一致：
+新文章推荐至少提供以下信息：
 
 ```yaml
 ---
 title: 清晰的文章标题
-description: 一句话说明读者可以完成什么。
-slug: example-article
-category: guides
+description: 一句话说明文章内容与读者收益。
 sidebar_position: 100
 ---
 ```
 
-其中 `title`、`description` 和 `sidebar_position` 是基础必填字段，`sidebar_position` 必须是正整数。正文从 `##` 开始，不要重复写一个与 Front Matter 标题相同的 `#` 标题。
+`title`、`description` 和 `sidebar_position` 是基础必填字段，`sidebar_position` 必须是正整数。通过 CMS 创建文章时还会写入 `slug` 与 `category`；它们必须分别匹配文件名和父目录。正文从 `##` 开始，不要重复写一个与 Front Matter 标题相同的 `#` 标题。
 
 ### 图片
 
@@ -149,19 +148,19 @@ sidebar_position: 100
 
 ### WikiLink
 
-站点支持文档 WikiLink，例如：
+站点支持文档 WikiLink。同目录文章可使用 slug；跨分类链接使用知识库内容根目录相对的文档 ID（`<category>/<slug>`）：
 
 ```markdown
-[[knowledge-base]] [[knowledge-base|知识库概览]] [[../guides/getting-started|开始使用]]
+[[knowledge-base]] [[general/knowledge-base|知识库概览]] [[guides/getting-started|开始使用]]
 ```
 
 目标必须是同一语言下已经存在的知识库 `.md` 文档。图片仍需使用标准 Markdown 语法。
 
 ### 中英文规则
 
-中文目录属于 Docusaurus 翻译树，中文文档通常必须有相同相对路径和 document ID 的英文源文档。创建中文翻译时应先创建英文源文档。
+中文是默认语言，`website/docs/knowledge-base/` 是唯一源内容树，对应公开路径 `/docs/...`。英文位于 Docusaurus 的 `en` 翻译树，对应 `/en/docs/...`。
 
-如果确实需要独立的中文文章，应新增独立 docs plugin，或同步创建对应英文源文档；不要直接在现有翻译树中添加没有英文来源的中文文档。
+英文翻译必须有相同相对路径和 document ID 的中文源文档，并保持分类、文件名和 slug 一致。中文源文章可以在英文翻译完成前独立发布；不要在英文翻译树中创建没有中文来源的文章，也不要使用占位机器翻译冒充完成内容。
 
 ## 内容管理与 OAuth
 
@@ -259,9 +258,12 @@ npx --yes vercel@59.1.4 ls docusaurus-knowledge-base
 命令出现超时、上传错误或 `fetch failed` 时，不能直接判断部署成功或失败。必须通过 `ls`、`inspect` 和线上 HTTP 结果核对实际状态。确认部署 Ready 后，再验证以下稳定地址及本次文章页面：
 
 - `https://kb.n8nmydomain.com/`
-- `https://kb.n8nmydomain.com/docs`
-- `https://kb.n8nmydomain.com/zh-CN/`
-- `https://kb.n8nmydomain.com/admin`
+- `https://kb.n8nmydomain.com/en/`
+- `https://kb.n8nmydomain.com/docs/knowledge-base/general/knowledge-base`
+- `https://kb.n8nmydomain.com/en/docs/knowledge-base/general/knowledge-base`
+- `https://kb.n8nmydomain.com/admin/`
+- `https://kb.n8nmydomain.com/robots.txt`
+- `https://kb.n8nmydomain.com/sitemap.xml`
 
 ## 许可证与归属
 
