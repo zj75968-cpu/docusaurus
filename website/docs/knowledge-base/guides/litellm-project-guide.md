@@ -1,14 +1,17 @@
 ---
-title: 'LiteLLM 项目导读：统一调用多家大模型的 AI Gateway'
-description: '理解 LiteLLM 的 SDK、AI Gateway、模型路由、多上游容错、设计模式与多租户架构。'
+title: LiteLLM 项目导读：统一调用多家大模型的 AI Gateway
+description: 从 Python SDK、AI Gateway、Router、Provider 适配器和多租户等角度，系统理解 LiteLLM 的架构与核心调用流程。
 slug: litellm-project-guide
 category: guides
-sidebar_position: 100
+sidebar_position: 20
 tags:
-  - litellm
-  - ai-gateway
-  - python
-  - fastapi
+  - LiteLLM
+  - AI Gateway
+  - Python
+  - FastAPI
+  - LLM
+  - 系统架构
+  - 设计模式
 ---
 
 ## 摘要
@@ -539,3 +542,7 @@ Provider Adapter
 ```
 
 先理解这条主调用链，再学习缓存、Guardrails、费用、Dashboard 和可观测性，会更容易建立完整认识。
+
+---
+
+> 发布说明：本文当前处于草稿状态。发布前请确认标题、作者、日期、站点分类、标签以及网站是否支持 Mermaid，然后将 Front Matter 中的 `draft: true` 修改为 `draft: false`。
