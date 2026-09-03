@@ -542,7 +542,3 @@ Provider Adapter
 ```
 
 先理解这条主调用链，再学习缓存、Guardrails、费用、Dashboard 和可观测性，会更容易建立完整认识。
-
----
-
-> 发布说明：本文当前处于草稿状态。发布前请确认标题、作者、日期、站点分类、标签以及网站是否支持 Mermaid，然后将 Front Matter 中的 `draft: true` 修改为 `draft: false`。
