@@ -202,6 +202,217 @@
   font-size: 0.85rem;
 }
 
+.featuredSection {
+  padding: 6rem 0;
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+  background:
+    radial-gradient(circle at 10% 15%, rgb(45 212 191 / 9%), transparent 30rem),
+    var(--ifm-background-color);
+}
+
+.featuredHeading {
+  display: grid;
+  grid-template-columns: minmax(12rem, 0.55fr) minmax(0, 1.45fr);
+  gap: 4rem;
+  align-items: start;
+  margin-bottom: 2.5rem;
+}
+
+.featuredHeading .sectionLabel {
+  margin-top: 0.45rem;
+  margin-bottom: 0;
+}
+
+.featuredHeading h2 {
+  margin-bottom: 0.8rem;
+  font-size: clamp(2.15rem, 4vw, 3.5rem);
+  letter-spacing: -0.04em;
+}
+
+.featuredIntro {
+  max-width: 48rem;
+  margin-bottom: 0;
+  color: var(--ifm-color-emphasis-700);
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
+.featuredGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(18rem, 0.75fr);
+  gap: 1.25rem;
+}
+
+.liteLlmCard,
+.obsidianCard {
+  overflow: hidden;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 1rem;
+}
+
+.liteLlmCard {
+  padding: 2rem;
+  color: #dff7f4;
+  border-color: rgb(94 234 212 / 22%);
+  background:
+    linear-gradient(145deg, rgb(13 148 136 / 17%), transparent 55%), #0b2423;
+  box-shadow: 0 1.5rem 4rem rgb(7 26 26 / 15%);
+}
+
+.obsidianCard {
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  padding: 2rem;
+  background: var(--ifm-background-surface-color);
+}
+
+.cardLabel,
+.cardLabelInverse {
+  display: inline-block;
+  margin-bottom: 1.25rem;
+  color: #0f766e;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+}
+
+.cardLabelInverse {
+  color: #5eead4;
+}
+
+.cardTitle {
+  margin-bottom: 0.75rem;
+  font-size: clamp(1.55rem, 2.5vw, 2.1rem);
+  letter-spacing: -0.025em;
+}
+
+.cardTitleInverse {
+  color: #f1fffd;
+}
+
+.cardText {
+  margin-bottom: 0;
+  color: var(--ifm-color-emphasis-700);
+  line-height: 1.72;
+}
+
+.cardTextInverse {
+  color: #a9c2bf;
+}
+
+.learningPath {
+  margin-top: 2rem;
+  border-top: 1px solid rgb(153 246 228 / 18%);
+}
+
+.learningStep {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 1.15rem 0;
+  border-bottom: 1px solid rgb(153 246 228 / 18%);
+  color: #effffc;
+  text-decoration: none;
+}
+
+.learningStep:hover {
+  color: #5eead4;
+  text-decoration: none;
+}
+
+.learningNumber {
+  color: #5eead4;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.learningCopy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.learningCopy strong {
+  font-size: 1.05rem;
+}
+
+.learningCopy small {
+  overflow: hidden;
+  color: #8faeaa;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.learningArrow {
+  color: #5eead4;
+  font-size: 1.25rem;
+  transition: transform 160ms ease;
+}
+
+.learningStep:hover .learningArrow {
+  transform: translateX(0.35rem);
+}
+
+.obsidianPoints {
+  display: grid;
+  gap: 0.75rem;
+  margin: 1.75rem 0 2rem;
+  padding: 0;
+  list-style: none;
+}
+
+.obsidianPoints li {
+  position: relative;
+  padding-left: 1.35rem;
+  color: var(--ifm-color-emphasis-800);
+  line-height: 1.55;
+}
+
+.obsidianPoints li::before {
+  position: absolute;
+  top: 0.55rem;
+  left: 0;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: #14b8a6;
+  content: '';
+}
+
+.featuredAction {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: auto;
+  padding-top: 1.35rem;
+  border-top: 1px solid var(--ifm-color-emphasis-300);
+  color: #0f766e;
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.featuredAction:hover {
+  color: #0d9488;
+  text-decoration: none;
+}
+
+.featuredActionArrow {
+  font-size: 1.25rem;
+  transition: transform 160ms ease;
+}
+
+.featuredAction:hover .featuredActionArrow {
+  transform: translateX(0.35rem);
+}
+
 .section {
   padding: 7rem 0;
 }
@@ -470,6 +681,8 @@
   }
 
   .heroInner,
+  .featuredHeading,
+  .featuredGrid,
   .sectionHeading,
   .methodLayout,
   .startGrid,
@@ -530,8 +743,28 @@
   }
 
   .section,
+  .featuredSection,
   .methodSection {
     padding: 5rem 0;
+  }
+
+  .featuredHeading {
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .liteLlmCard,
+  .obsidianCard {
+    padding: 1.35rem;
+  }
+
+  .learningStep {
+    grid-template-columns: 2rem minmax(0, 1fr) auto;
+    gap: 0.65rem;
+  }
+
+  .learningCopy small {
+    white-space: normal;
   }
 
   .sectionHeading {

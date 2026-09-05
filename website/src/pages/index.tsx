@@ -8,6 +8,15 @@ import styles from './styles.module.css';
 const githubUrl = 'https://github.com/zj75968-cpu';
 const discussionsUrl = 'https://github.com/zj75968-cpu/docusaurus/discussions';
 const docsUrl = '/docs/knowledge-base/general/knowledge-base';
+const liteLlmIntroUrl = '/docs/knowledge-base/guides/litellm-project-guide';
+const liteLlmArchitectureUrl =
+  '/docs/knowledge-base/guides/litellm-architecture-deep-dive';
+const liteLlmLabUrl = '/docs/knowledge-base/guides/litellm-hands-on-lab';
+const obsidianUrl = '/docs/knowledge-base/guides/obsidian-publishing-guide';
+const brandMark = 'ZJ';
+const brandCaption = 'KNOWLEDGE / PRACTICE';
+const sectionArrow = '→';
+const startLabel = 'START HERE';
 
 const content = {
   'zh-CN': {
@@ -24,6 +33,25 @@ const content = {
       ['中英', '双语发布'],
       ['开放', '协作与讨论'],
     ],
+    featuredLabel: '推荐学习内容',
+    featuredTitle: '从真实文章开始学习',
+    featuredIntro:
+      '两条可以马上开始的实践路径：理解并运行统一模型网关，或建立从 Obsidian 到知识库的发布流程。',
+    liteLlmLabel: 'AI GATEWAY · 3 阶段',
+    liteLlmTitle: 'LiteLLM：从概念到故障验证',
+    liteLlmText:
+      '先判断什么时候需要模型网关，再沿请求链读懂架构，最后亲手启动 Proxy 并观察错误发生在哪一层。',
+    liteLlmStages: [
+      ['01', '入门导读', '10 分钟建立核心概念', liteLlmIntroUrl],
+      ['02', '架构深读', '沿一次请求阅读主调用链', liteLlmArchitectureUrl],
+      ['03', '动手实验', '启动 Proxy 并验证三类故障', liteLlmLabUrl],
+    ],
+    obsidianLabel: 'KNOWLEDGE WORKFLOW',
+    obsidianTitle: '使用 Obsidian 发布知识文章',
+    obsidianText:
+      '从标准 Markdown、WikiLink 和图片路径开始，走完中英文同步、内容校验与安全发布检查。',
+    obsidianPoints: ['准备标准 Markdown', '连接文章与图片', '完成发布前校验'],
+    obsidianAction: '阅读 Obsidian 发布指南',
     topicsTitle: '长期关注的主题',
     topicsIntro: '不追逐信息流，专注能够进入工作流、经得起复用的实践。',
     topics: [
@@ -82,6 +110,44 @@ const content = {
       ['ZH/EN', 'bilingual publishing'],
       ['Open', 'collaboration'],
     ],
+    featuredLabel: 'Recommended learning',
+    featuredTitle: 'Start with practical articles',
+    featuredIntro:
+      'Two paths you can use immediately: understand and run a unified model gateway, or build a publishing workflow from Obsidian to the knowledge base.',
+    liteLlmLabel: 'AI GATEWAY · 3 STAGES',
+    liteLlmTitle: 'LiteLLM: from concepts to failure checks',
+    liteLlmText:
+      'Decide when a model gateway is useful, follow one request through the architecture, then start a Proxy and identify the layer behind each failure.',
+    liteLlmStages: [
+      [
+        '01',
+        'Beginner guide',
+        'Build the core mental model in 10 minutes',
+        liteLlmIntroUrl,
+      ],
+      [
+        '02',
+        'Architecture deep dive',
+        'Read the main path through one request',
+        liteLlmArchitectureUrl,
+      ],
+      [
+        '03',
+        'Hands-on lab',
+        'Start the Proxy and verify three failures',
+        liteLlmLabUrl,
+      ],
+    ],
+    obsidianLabel: 'KNOWLEDGE WORKFLOW',
+    obsidianTitle: 'Publish knowledge articles with Obsidian',
+    obsidianText:
+      'Start with standard Markdown, WikiLinks, and image paths, then complete bilingual synchronization, content validation, and safety checks.',
+    obsidianPoints: [
+      'Prepare standard Markdown',
+      'Connect articles and images',
+      'Complete pre-publish validation',
+    ],
+    obsidianAction: 'Read the Obsidian publishing guide',
     topicsTitle: 'Long-term topics',
     topicsIntro:
       'Less attention to the feed, more focus on practices that enter real workflows and remain reusable.',
@@ -175,8 +241,8 @@ export default function Home(): ReactNode {
               </div>
             </div>
             <div className={styles.heroMark} aria-hidden="true">
-              <span>ZJ</span>
-              <small>KNOWLEDGE / PRACTICE</small>
+              <span>{brandMark}</span>
+              <small>{brandCaption}</small>
             </div>
           </div>
           <div className={`container ${styles.proofGrid}`}>
@@ -188,6 +254,73 @@ export default function Home(): ReactNode {
             ))}
           </div>
         </header>
+
+        <section className={styles.featuredSection}>
+          <div className="container">
+            <div className={styles.featuredHeading}>
+              <p className={styles.sectionLabel}>{copy.featuredLabel}</p>
+              <div>
+                <Heading as="h2">{copy.featuredTitle}</Heading>
+                <p className={styles.featuredIntro}>{copy.featuredIntro}</p>
+              </div>
+            </div>
+
+            <div className={styles.featuredGrid}>
+              <article className={styles.liteLlmCard}>
+                <div className={styles.featuredCardHeader}>
+                  <span className={styles.cardLabelInverse}>
+                    {copy.liteLlmLabel}
+                  </span>
+                  <Heading as="h3" className={styles.cardTitleInverse}>
+                    {copy.liteLlmTitle}
+                  </Heading>
+                  <p className={styles.cardTextInverse}>{copy.liteLlmText}</p>
+                </div>
+                <div className={styles.learningPath}>
+                  {copy.liteLlmStages.map(
+                    ([number, title, description, to]) => (
+                      <Link className={styles.learningStep} to={to} key={to}>
+                        <span className={styles.learningNumber}>{number}</span>
+                        <span className={styles.learningCopy}>
+                          <strong>{title}</strong>
+                          <small>{description}</small>
+                        </span>
+                        <span
+                          className={styles.learningArrow}
+                          aria-hidden="true">
+                          {sectionArrow}
+                        </span>
+                      </Link>
+                    ),
+                  )}
+                </div>
+              </article>
+
+              <article className={styles.obsidianCard}>
+                <div className={styles.featuredCardHeader}>
+                  <span className={styles.cardLabel}>{copy.obsidianLabel}</span>
+                  <Heading as="h3" className={styles.cardTitle}>
+                    {copy.obsidianTitle}
+                  </Heading>
+                  <p className={styles.cardText}>{copy.obsidianText}</p>
+                </div>
+                <ul className={styles.obsidianPoints}>
+                  {copy.obsidianPoints.map((point) => (
+                    <li key={point}>{point}</li>
+                  ))}
+                </ul>
+                <Link className={styles.featuredAction} to={obsidianUrl}>
+                  <span>{copy.obsidianAction}</span>
+                  <span
+                    className={styles.featuredActionArrow}
+                    aria-hidden="true">
+                    {sectionArrow}
+                  </span>
+                </Link>
+              </article>
+            </div>
+          </div>
+        </section>
 
         <section className={styles.section}>
           <div className="container">
@@ -230,7 +363,7 @@ export default function Home(): ReactNode {
         <section className={styles.section}>
           <div className={`container ${styles.startGrid}`}>
             <div>
-              <p className={styles.sectionLabel}>START HERE</p>
+              <p className={styles.sectionLabel}>{startLabel}</p>
               <Heading as="h2">{copy.startTitle}</Heading>
               <p className={styles.startText}>{copy.startText}</p>
             </div>
@@ -238,7 +371,7 @@ export default function Home(): ReactNode {
               {copy.startLinks.map(([label, to]) => (
                 <Link className={styles.articleLink} to={to} key={to}>
                   <span>{label}</span>
-                  <span aria-hidden="true">→</span>
+                  <span aria-hidden="true">{sectionArrow}</span>
                 </Link>
               ))}
             </div>
